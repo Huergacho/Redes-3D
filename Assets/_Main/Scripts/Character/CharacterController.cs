@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-[RequireComponent(typeof(CharacterModel))]
+[RequireComponent(typeof(CharacterModel),typeof(Weapon))]
 public class CharacterController : MonoBehaviourPun
 {
     private CharacterModel model;
+
+    private Weapon _weapon;
     // Start is called before the first frame update
     private void Awake()
     {
         if (!photonView.IsMine)
         {
-            Destroy(this);
+            Destroy(this); 
         }
+        _weapon = GetComponent<Weapon>();
         model = GetComponent<CharacterModel>();
 
     }
@@ -23,6 +26,7 @@ public class CharacterController : MonoBehaviourPun
     {
         MoveCommand();
         JumpCommand();
+        Shoot();
     }
     void JumpCommand()
     {
@@ -33,10 +37,19 @@ public class CharacterController : MonoBehaviourPun
     }
     void MoveCommand()
     {
-        var movement = new Vector2(Input.GetAxis("Horizontal"), 0);
-        if(movement != Vector2.zero)
+        var movement = new Vector3(Input.GetAxis("Horizontal"),0 ,Input.GetAxis("Vertical"));
+        if(movement != Vector3.zero)
         {
             model.Move(movement);
+        }
+    }
+
+    void Shoot()
+    {
+
+        if (Input.GetKey(KeyCode.P))
+        {
+            _weapon.Shoot();
         }
     }
 }

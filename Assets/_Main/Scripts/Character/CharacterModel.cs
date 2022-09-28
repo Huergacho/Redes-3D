@@ -7,12 +7,12 @@ public class CharacterModel : MonoBehaviour
     [SerializeField] public float speed;
     [SerializeField] private float jumpForce;
     [SerializeField] private string groundTag;
-    private Rigidbody2D _rb2d;
+    private Rigidbody _rb;
     bool canJump;
     // Start is called before the first frame update
     void Start()
     {
-        _rb2d = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -20,18 +20,21 @@ public class CharacterModel : MonoBehaviour
     {
         
     }
-    public void Move(Vector2 dir)
+    public void Move(Vector3 dir)
     {
-        _rb2d.velocity = new Vector2(dir.x, dir.y) * speed;
+        _rb.velocity = new Vector3(dir.x, 0,dir.z) * speed;
     }
     public void Jump()
     {
         if (canJump)
         {
-            _rb2d.AddForce(Vector2.up * jumpForce); 
+            _rb.AddForce(Vector2.up * jumpForce); 
         }
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void lookDir(Vector3 dir){
+        
+    }
+    private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.tag != groundTag)
         {
@@ -42,4 +45,5 @@ public class CharacterModel : MonoBehaviour
             canJump = true;
         }
     }
+    
 }
