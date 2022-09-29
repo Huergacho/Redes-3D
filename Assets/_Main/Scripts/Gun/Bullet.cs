@@ -1,12 +1,17 @@
 using System;
 using System.Security.Cryptography;
 using Photon.Pun;
+using Photon.Realtime;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class Bullet : MonoBehaviourPun 
 {
     [SerializeField] private float bulletSpeed;
-    [SerializeField] private float lifeTime;   
+    [SerializeField] private float lifeTime;
+    public int damage;
+
+
     private void Update()
     {
         //if (photonView.IsMine)
@@ -40,7 +45,26 @@ public class Bullet : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
+            MakeDamage(other.gameObject);
             DestroyObject();
         }
-    }    
+        else
+        {
+            photonView.RPC("RequestLifeController",photonView.Owner,other.gameObject);
+        }
+    }
+
+    private void MakeDamage(GameObject target)
+    {
+        var life = target.GetComponent<LifeController>();
+        if (life != null)
+        {
+            life.TakeDamage(damage);
+        }
+    }
+    [PunRPC]
+    public void RequestLifeController(Player player, GameObject target)
+    {
+        photonView.RPC("MakeDamage",player,target);
+    }
 }

@@ -5,15 +5,13 @@ using UnityEngine;
 public class CharacterModel : MonoBehaviour
 {
     [SerializeField] public float speed;
-    [SerializeField] private float jumpForce;
-    [SerializeField] private string groundTag;
     private Rigidbody _rb;
-    bool canJump;
 
     private Camera _camera;
     // Start is called before the first frame update
     void Start()
     {
+        
         _camera = Camera.main;
         _rb = GetComponent<Rigidbody>();
     }

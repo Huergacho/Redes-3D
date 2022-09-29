@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-[RequireComponent(typeof(CharacterModel),typeof(Weapon))]
+[RequireComponent(typeof(CharacterModel),typeof(Weapon),typeof(LifeController))]
 public class CharacterController : MonoBehaviourPun
 {
     private CharacterModel model;
-
+    private LifeController _lifeController;
     private Weapon _weapon;
+    [SerializeField] private float maxLife;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -16,6 +18,9 @@ public class CharacterController : MonoBehaviourPun
         {
             Destroy(this); 
         }
+
+        _lifeController = GetComponent<LifeController>();
+        _lifeController.AssignLife(maxLife);
         _weapon = GetComponent<Weapon>();
         model = GetComponent<CharacterModel>();
 

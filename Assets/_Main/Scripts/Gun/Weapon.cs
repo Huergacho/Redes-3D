@@ -9,13 +9,12 @@ public class Weapon : MonoBehaviourPun
 {
     [SerializeField] private WeaponStats stats;
     [SerializeField] private Transform firePoint;
-
     private float currFireCooldown;
-
     private bool canStartTimer;
     // Start is called before the first frame update
     void Start()
     {
+        stats.BulletPrefab.damage = stats.WeaponDamage;
         currFireCooldown = 0;
     }
 
@@ -31,6 +30,7 @@ public class Weapon : MonoBehaviourPun
     private void ChangeWeapon(WeaponStats newWeapon)
     {
         stats = newWeapon;
+        stats.BulletPrefab.damage = stats.WeaponDamage;
     }
     
     public void Shoot()

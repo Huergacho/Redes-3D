@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 4772656836320647662}
   - component: {fileID: 34261343}
   - component: {fileID: 6311363734282593383}
+  - component: {fileID: 7571170771075085258}
   m_Layer: 3
   m_Name: MC
   m_TagString: Untagged
@@ -162,8 +163,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  jumpForce: 300
-  groundTag: Ground
 --- !u!114 &4772656836320647658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,6 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f3d5d3eff171ff44a11c98f38de2d18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxLife: 0
 --- !u!114 &4772656836320647663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,3 +246,15 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &7571170771075085258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4772656836320647639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bb88041b0614557ac6431da96b3b1a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
