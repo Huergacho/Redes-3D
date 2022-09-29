@@ -5,8 +5,9 @@ using Photon.Pun;
 public class Instantiator : MonoBehaviour
 {
     public Transform spawn;
+    [SerializeField] private string characterName;
     private void Start()
     {
-        PhotonNetwork.Instantiate("Character", spawn.position, Quaternion.identity);
+        PhotonNetwork.Instantiate(characterName, spawn.position, Quaternion.identity);
     }
 }
