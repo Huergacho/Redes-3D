@@ -757,7 +757,7 @@ GameObject:
   - component: {fileID: 1893782964}
   - component: {fileID: 1893782963}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -778,6 +778,7 @@ MonoBehaviour:
   button: {fileID: 743346217}
   status: {fileID: 238905996}
   roomName: Fiumba
+  levelToLoad: House
 --- !u!4 &1893782964
 Transform:
   m_ObjectHideFlags: 0

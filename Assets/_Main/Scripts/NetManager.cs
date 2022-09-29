@@ -10,7 +10,7 @@ class NetManager : MonoBehaviourPunCallbacks
     public Button button;
     public Text status;
     public string roomName;
-
+    [SerializeField] private string levelToLoad;
     private void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
@@ -50,7 +50,7 @@ class NetManager : MonoBehaviourPunCallbacks
     }
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel("Gameplay");
+        PhotonNetwork.LoadLevel(levelToLoad);
 
     }
 }

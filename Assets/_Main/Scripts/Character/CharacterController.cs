@@ -24,16 +24,13 @@ public class CharacterController : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-        MoveCommand();
-        JumpCommand();
-        Shoot();
-    }
-    void JumpCommand()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (photonView.IsMine)
         {
-            model.Jump();
+            MoveCommand();
+            Shoot();
+            model.CorrectRotation();
         }
+
     }
     void MoveCommand()
     {
@@ -46,8 +43,7 @@ public class CharacterController : MonoBehaviourPun
 
     void Shoot()
     {
-
-        if (Input.GetKey(KeyCode.P))
+        if (Input.GetKey(KeyCode.Mouse0))
         {
             _weapon.Shoot();
         }

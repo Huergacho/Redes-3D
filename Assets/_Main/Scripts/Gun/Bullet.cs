@@ -1,19 +1,46 @@
 using System;
+using System.Security.Cryptography;
+using Photon.Pun;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour 
+public class Bullet : MonoBehaviourPun 
 {
     [SerializeField] private float bulletSpeed;
+    [SerializeField] private float lifeTime;   
     private void Update()
     {
+        //if (photonView.IsMine)
+        //{
         Move();
+        DestroyOnLifeSpan();
+        //}
+
     }
     private void Move()
     {
-        transform.position += Vector3.forward * bulletSpeed;
+        transform.position += transform.forward * bulletSpeed * Time.deltaTime;
+    }
+
+    private void DestroyObject()
+    {
+        
+            PhotonNetwork.Destroy(gameObject);
+        
+    }
+
+    private void DestroyOnLifeSpan()
+    {
+        lifeTime -= Time.deltaTime;
+        if (lifeTime <= 0)
+        {
+            DestroyObject();
+        }
     }
     private void OnCollisionEnter(Collision other) 
     {
-        Destroy(gameObject);
+        if (photonView.IsMine)
+        {
+            DestroyObject();
+        }
     }    
 }

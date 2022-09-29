@@ -9,9 +9,12 @@ public class CharacterModel : MonoBehaviour
     [SerializeField] private string groundTag;
     private Rigidbody _rb;
     bool canJump;
+
+    private Camera _camera;
     // Start is called before the first frame update
     void Start()
     {
+        _camera = Camera.main;
         _rb = GetComponent<Rigidbody>();
     }
 
@@ -24,26 +27,18 @@ public class CharacterModel : MonoBehaviour
     {
         _rb.velocity = new Vector3(dir.x, 0,dir.z) * speed;
     }
-    public void Jump()
+    public void CorrectRotation()
     {
-        if (canJump)
+        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hitInfo))
         {
-            _rb.AddForce(Vector2.up * jumpForce); 
+            var target = hitInfo.point;
+            target.y = transform.position.y;
+            var distance = Vector3.Distance(transform.position, hitInfo.point);
+            if (distance >= 1f)
+                transform.LookAt(target);
         }
-    }
-    public void lookDir(Vector3 dir){
-        
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.tag != groundTag)
-        {
-            canJump = false;
-        }
-        else
-        {
-            canJump = true;
-        }
-    }
+    }  
+    
     
 }
