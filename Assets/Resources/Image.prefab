@@ -91,6 +91,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _colorIdent: {fileID: 1498513270838530927}
   offset: {x: 0, y: 0, z: 0}
+  colorBucket:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 1, g: 0.80241597, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0.9943776, a: 1}
+  - {r: 0.08276451, g: 1, b: 0, a: 1}
   hasChanged: 0
 --- !u!114 &-269003719887610735
 MonoBehaviour:

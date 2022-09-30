@@ -12,7 +12,7 @@ public class Identificator : MonoBehaviourPun
     [SerializeField] private Image _colorIdent;
     [SerializeField] private Vector3 offset;
     private Transform _target;
-    private Color[] colorBucket;
+    [SerializeField]private Color[] colorBucket;
     public bool hasChanged = false;
     private Camera _camera;
     private void Awake()
