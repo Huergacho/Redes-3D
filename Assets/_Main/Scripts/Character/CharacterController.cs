@@ -21,6 +21,7 @@ public class CharacterController : MonoBehaviourPun
 
         _lifeController = GetComponent<LifeController>();
         _lifeController.AssignLife(maxLife);
+        _lifeController.onDie += Die;
         _weapon = GetComponent<Weapon>();
         model = GetComponent<CharacterModel>();
 
@@ -52,5 +53,10 @@ public class CharacterController : MonoBehaviourPun
         {
             _weapon.Shoot();
         }
+    }
+
+    void Die()
+    {
+        PhotonNetwork.Destroy(gameObject);
     }
 }
