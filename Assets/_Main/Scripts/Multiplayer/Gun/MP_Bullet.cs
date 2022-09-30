@@ -5,7 +5,7 @@ using Photon.Realtime;
 using UnityEditor.PackageManager;
 using UnityEngine;
 
-public class Bullet : MonoBehaviourPun 
+public class MP_Bullet : MonoBehaviourPun 
 {
     [SerializeField] private float bulletSpeed;
     [SerializeField] private float lifeTime;
@@ -56,7 +56,7 @@ public class Bullet : MonoBehaviourPun
 
     private void MakeDamage(GameObject target)
     {
-        var life = target.GetComponent<LifeController>();
+        var life = target.GetComponent<MP_LifeController>();
         if (life != null)
         {
             life.TakeDamage(damage);

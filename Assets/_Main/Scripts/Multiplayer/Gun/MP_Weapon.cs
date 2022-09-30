@@ -5,7 +5,7 @@ using System.ComponentModel;
 using Photon.Pun;
 using UnityEngine;
 
-public class Weapon : MonoBehaviourPun
+public class MP_Weapon : MonoBehaviourPun
 {
     [SerializeField] private WeaponStats stats;
     [SerializeField] private Transform firePoint;
@@ -14,7 +14,7 @@ public class Weapon : MonoBehaviourPun
     // Start is called before the first frame update
     void Start()
     {
-        stats.BulletPrefab.damage = stats.WeaponDamage;
+        stats.MpBulletPrefab.damage = stats.WeaponDamage;
         currFireCooldown = 0;
     }
 
@@ -30,14 +30,14 @@ public class Weapon : MonoBehaviourPun
     private void ChangeWeapon(WeaponStats newWeapon)
     {
         stats = newWeapon;
-        stats.BulletPrefab.damage = stats.WeaponDamage;
+        stats.MpBulletPrefab.damage = stats.WeaponDamage;
     }
     
     public void Shoot()
     {
         if (currFireCooldown <= 0)
         {
-            var bulletClone = PhotonNetwork.Instantiate(stats.BulletPrefab.name,firePoint.position,firePoint.rotation);
+            var bulletClone = PhotonNetwork.Instantiate(stats.MpBulletPrefab.name,firePoint.position,firePoint.rotation);
             currFireCooldown = stats.FireRate;
             canStartTimer = true;
         }

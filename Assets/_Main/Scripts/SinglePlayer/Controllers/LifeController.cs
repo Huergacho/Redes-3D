@@ -1,8 +1,7 @@
 ﻿using System;
-using Photon.Pun;
 using UnityEngine;
 
-public class LifeController: MonoBehaviourPun
+public class LifeController: MonoBehaviour
 {
     private float currentLife;
     public event Action onDie;
@@ -12,16 +11,12 @@ public class LifeController: MonoBehaviourPun
     }
 
     public void TakeDamage(float damage)
-    {
-        if (photonView.IsMine)
+    { 
+        if (currentLife - damage <= 0)
         {
-            if (currentLife - damage <= 0)
-            {
-                Die();
-            }
-            currentLife -= damage;
+            Die();
         }
-
+        currentLife -= damage;
     }
 
     private void Die()

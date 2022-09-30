@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-[RequireComponent(typeof(Rigidbody))]
-public class CharacterModel : MonoBehaviour
+﻿using UnityEngine;
+public class SP_CharacterModel : MonoBehaviour
 {
     [SerializeField] public float speed;
     private Rigidbody _rb;
@@ -37,6 +34,4 @@ public class CharacterModel : MonoBehaviour
                 transform.LookAt(target);
         }
     }  
-    
-    
 }

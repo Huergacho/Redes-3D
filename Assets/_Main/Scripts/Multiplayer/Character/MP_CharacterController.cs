@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-[RequireComponent(typeof(CharacterModel),typeof(Weapon),typeof(LifeController))]
-public class CharacterController : MonoBehaviourPun
+[RequireComponent(typeof(SP_CharacterModel),typeof(MP_Weapon),typeof(MP_LifeController))]
+public class MP_CharacterController : MonoBehaviourPun
 {
-    private CharacterModel model;
-    private LifeController _lifeController;
-    private Weapon _weapon;
+    private SP_CharacterModel model;
+    private MP_LifeController _mpLifeController;
+    private MP_Weapon _mpWeapon;
     [SerializeField] private float maxLife;
 
     // Start is called before the first frame update
@@ -19,10 +19,10 @@ public class CharacterController : MonoBehaviourPun
             Destroy(this); 
         }
 
-        _lifeController = GetComponent<LifeController>();
-        _lifeController.AssignLife(maxLife);
-        _weapon = GetComponent<Weapon>();
-        model = GetComponent<CharacterModel>();
+        _mpLifeController = GetComponent<MP_LifeController>();
+        _mpLifeController.AssignLife(maxLife);
+        _mpWeapon = GetComponent<MP_Weapon>();
+        model = GetComponent<SP_CharacterModel>();
 
     }
 
@@ -50,7 +50,7 @@ public class CharacterController : MonoBehaviourPun
     {
         if (Input.GetKey(KeyCode.Mouse0))
         {
-            _weapon.Shoot();
+            _mpWeapon.Shoot();
         }
     }
 }
