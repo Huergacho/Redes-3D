@@ -35,7 +35,7 @@ public class CharacterView : MonoBehaviourPun
         if (_identificator != null)
         {
            var newColor = Random.ColorHSV();
-            _identificator.SetColor(newColor);
+            _identificator.SetColor(photonView.OwnerActorNr);
         }
     }
 
