@@ -28,9 +28,7 @@ public class Bullet : MonoBehaviourPun
 
     private void DestroyObject()
     {
-        
-            PhotonNetwork.Destroy(gameObject);
-        
+        PhotonNetwork.Destroy(gameObject);
     }
 
     private void DestroyOnLifeSpan()
