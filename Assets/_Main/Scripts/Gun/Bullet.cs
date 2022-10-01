@@ -1,8 +1,5 @@
-using System;
-using System.Security.Cryptography;
 using Photon.Pun;
 using Photon.Realtime;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class Bullet : MonoBehaviourPun 
@@ -14,11 +11,11 @@ public class Bullet : MonoBehaviourPun
 
     private void Update()
     {
-        //if (photonView.IsMine)
-        //{
+        if (photonView.IsMine)
+        {
         Move();
         DestroyOnLifeSpan();
-        //}
+        }
 
     }
     private void Move()
@@ -44,11 +41,8 @@ public class Bullet : MonoBehaviourPun
         if (photonView.IsMine)
         {
             MakeDamage(other.gameObject);
+          //  photonView.RPC("RequestLifeController",photonView.Owner,other.gameObject);
             DestroyObject();
-        }
-        else
-        {
-            photonView.RPC("RequestLifeController",photonView.Owner,other.gameObject);
         }
     }
 
@@ -60,9 +54,9 @@ public class Bullet : MonoBehaviourPun
             life.TakeDamage(damage);
         }
     }
-    [PunRPC]
-    public void RequestLifeController(Player player, GameObject target)
-    {
-        photonView.RPC("MakeDamage",player,target);
-    }
+    // [PunRPC]
+    // public void RequestLifeController(Player player, GameObject target)
+    // {
+    //     photonView.RPC("MakeDamage",player,target);
+    // }
 }

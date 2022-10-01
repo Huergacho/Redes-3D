@@ -2,6 +2,7 @@
 using Photon.Pun;
 using UnityEngine;
 
+//public class LifeController: MonoBehaviourPun
 public class LifeController: MonoBehaviourPun
 {
     private float currentLife;
@@ -10,7 +11,7 @@ public class LifeController: MonoBehaviourPun
     {
         currentLife = data;
     }
-
+    [PunRPC]
     public void TakeDamage(float damage)
     {
         if (photonView.IsMine)
@@ -21,9 +22,17 @@ public class LifeController: MonoBehaviourPun
             }
             currentLife -= damage;
         }
+        else
+        {
+            photonView.RPC("TakeDamage",photonView.Owner,damage);
+        }
 
     }
 
+    public bool IsAlive()
+    {
+        return  currentLife > 0;
+    }
     private void Die()
     {
         onDie.Invoke();
