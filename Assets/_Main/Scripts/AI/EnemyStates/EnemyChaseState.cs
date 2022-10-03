@@ -43,7 +43,7 @@ public class EnemyChaseState<T> : State<T>
         _onLookAt?.Invoke(dir);
         
         _counter -= Time.deltaTime;
-0
+        
         if (_counter > 0) return;
         
         _root.Execute();
