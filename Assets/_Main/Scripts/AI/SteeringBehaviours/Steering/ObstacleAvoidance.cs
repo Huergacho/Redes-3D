@@ -101,8 +101,6 @@ public class ObstacleAvoidance : ISteering
         return dir;
     }
 
-    
-
     public void SetNewTarget (Transform _newTarget)
     {
         for (int i = 0; i < _behaviours.Length; i++)

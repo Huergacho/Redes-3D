@@ -9,12 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784ce74b49c048309dc0fdfa865cd4f8, type: 3}
-  m_Name: GoblinSO
+  m_Script: {fileID: 11500000, guid: da89391ed95dd6046ad14407e974c444, type: 3}
+  m_Name: GoblinLOS
   m_EditorClassIdentifier: 
-  maxLife: 1
-  speed: 4
-  damage: 1
-  distanceToAttack: 0.5
-  attackTimeLenght: 0.2
-  idleTimeLenght: 0.5
+  range: 10
+  angle: 90
+  obstaclesMask:
+    serializedVersion: 2
+    m_Bits: 0
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 8
