@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using _Main.ScriptableObjects.Character;
 using Photon.Pun;
 using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 
 public class SP_CharacterModel : MonoBehaviourPun
-{ 
-    public float speed;
+{
     protected Rigidbody _rb;
-
+    private Stats _stats;
     protected Camera _camera;
     // Start is called before the first frame update
     void Start()
@@ -25,7 +25,7 @@ public class SP_CharacterModel : MonoBehaviourPun
     }
     public void Move(Vector3 dir)
     {
-        _rb.velocity = new Vector3(dir.x, 0,dir.z) * speed;
+        _rb.velocity = new Vector3(dir.x, 0,dir.z) * _stats.MaxSpeed;
     }
     public void CorrectRotation()
     {
@@ -38,5 +38,10 @@ public class SP_CharacterModel : MonoBehaviourPun
             if (distance >= 1f)
                 transform.LookAt(target);
         }
+    }
+
+    public void AssignStats(Stats data)
+    {
+        _stats = data;
     }
 }

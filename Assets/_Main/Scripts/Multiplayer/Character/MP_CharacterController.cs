@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-[RequireComponent(typeof(CharacterModel),typeof(Weapon),typeof(MP_LifeController))]
-public class CharacterController : SP_CharacterController
+[RequireComponent(typeof(MP_CharacterModel),typeof(MP_Weapon),typeof(MP_LifeController))]
+public class MP_CharacterController : SP_CharacterController
 {
     // Start is called before the first frame update
     protected override void Awake()

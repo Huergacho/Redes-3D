@@ -1,7 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-public class CharacterView : MonoBehaviourPun
+public class MP_CharacterView : MonoBehaviourPun
 {
     private Identificator _identificator;
     [SerializeField] private Identificator _identificatorPrefab;

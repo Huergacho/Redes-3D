@@ -1,23 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using _Main.ScriptableObjects.Character;
 using Photon.Pun;
+using UnityEditor.MPE;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
 public class SP_CharacterController : MonoBehaviourPun
-{   private CharacterModel model;
-    protected SP_LifeController _mpLifeController;
-    protected Weapon _weapon;
-    [SerializeField] private float maxLife;
+{
+    [SerializeField] private Stats baseStats;
+    private SP_CharacterModel model;
+    private SP_LifeController SpLifeController;
+    private SP_Weapon _spWeapon;
 
     // Start is called before the first frame update
     protected virtual void Awake()
     {
-        _mpLifeController = GetComponent<SP_LifeController>();
-        _mpLifeController.AssignLife(maxLife);
-        _mpLifeController.OnDie += Die;
-        _weapon = GetComponent<Weapon>();
-        model = GetComponent<CharacterModel>();
+        SpLifeController = GetComponent<SP_LifeController>();
+        model = GetComponent<SP_CharacterModel>();
+        SpLifeController.AssignLife(baseStats.MaxLife);
+        model.AssignStats(baseStats);
+        SpLifeController.OnDie += Die;
+        _spWeapon = GetComponent<SP_Weapon>();
 
     }
 
@@ -40,9 +44,9 @@ public class SP_CharacterController : MonoBehaviourPun
 
     void Shoot()
     {
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.P))
         {
-            _weapon.Shoot();
+            _spWeapon.Shoot();
         }
     }
 
@@ -53,6 +57,6 @@ public class SP_CharacterController : MonoBehaviourPun
 
     public bool IsAlive()
     {
-        return _mpLifeController.IsAlive();
+        return SpLifeController.IsAlive();
     }
 }
