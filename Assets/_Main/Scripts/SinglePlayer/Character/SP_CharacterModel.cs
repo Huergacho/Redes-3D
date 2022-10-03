@@ -5,24 +5,21 @@ using Photon.Pun;
 using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 
-public class SP_CharacterModel : MonoBehaviourPun
+public class SP_CharacterModel : MonoBehaviourPun, IVel
 {
     protected Rigidbody _rb;
     private Stats _stats;
     protected Camera _camera;
+    private SP_LifeController _lifeController;
+    
+    private float _lastMoveMagnitude;
     // Start is called before the first frame update
     void Start()
     {
-        
         _camera = Camera.main;
         _rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void Move(Vector3 dir)
     {
         _rb.velocity = new Vector3(dir.x, 0,dir.z) * _stats.MaxSpeed;
@@ -40,8 +37,21 @@ public class SP_CharacterModel : MonoBehaviourPun
         }
     }
 
-    public void AssignStats(Stats data)
+    public void AssignStats(Stats data, SP_LifeController lifeController)
     {
         _stats = data;
+        _lifeController = lifeController;
+    }
+
+    
+    public float Vel
+    {
+        get => _lastMoveMagnitude;
+        private set => _lastMoveMagnitude = value;
+    }
+
+    public SP_LifeController GetLife()
+    {
+        return _lifeController;
     }
 }

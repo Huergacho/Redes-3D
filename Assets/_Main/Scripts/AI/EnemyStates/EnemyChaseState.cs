@@ -7,19 +7,19 @@ public class EnemyChaseState<T> : State<T>
     private INode _root;
     private ObstacleAvoidance _behaviour;
    
-    private Action _onChase;
     private float _timeToAttemptAttack;
     private float _counter;
     private Action<Vector3> _onMove;
+    private Action<Vector3> _onLookAt;
     private Action <bool> _setIdleCommand;
 
-    public EnemyChaseState(Transform target, INode root, ObstacleAvoidance behaviour,Action onChase, float timeToAttemptAttack, Action<Vector3> onMove, Action<bool> setIdleCommand)
+    public EnemyChaseState(Transform target, INode root, ObstacleAvoidance behaviour, float timeToAttemptAttack, Action<Vector3> onMove, Action<Vector3> onLookAt, Action<bool> setIdleCommand)
     {
         _root = root;
         _behaviour = behaviour;
-        _onChase = onChase;
         _timeToAttemptAttack = timeToAttemptAttack;
         _onMove = onMove;
+        _onLookAt = onLookAt;
         _target = target;
         _setIdleCommand = setIdleCommand;
     }
@@ -32,7 +32,6 @@ public class EnemyChaseState<T> : State<T>
     {
         _behaviour.SetNewBehaviour(ObstacleAvoidance.DesiredBehaviour.Pursuit);
         _behaviour.SetNewTarget(_target);
-        _onChase?.Invoke();
         _setIdleCommand?.Invoke(false);
         ResetCounter();
     }
@@ -41,11 +40,10 @@ public class EnemyChaseState<T> : State<T>
     {
         var dir = _behaviour.GetDir();
         _onMove?.Invoke(dir);
+        _onLookAt?.Invoke(dir);
         
         _counter -= Time.deltaTime;
-        
-        Debug.LogError("ChaseState");
-        
+0
         if (_counter > 0) return;
         
         _root.Execute();

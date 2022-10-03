@@ -10,17 +10,17 @@ public class SP_CharacterController : MonoBehaviourPun
 {
     [SerializeField] private Stats baseStats;
     private SP_CharacterModel model;
-    private SP_LifeController SpLifeController;
+    private SP_LifeController _spLifeController;
     private SP_Weapon _spWeapon;
 
     // Start is called before the first frame update
     protected virtual void Awake()
     {
-        SpLifeController = GetComponent<SP_LifeController>();
+        _spLifeController = GetComponent<SP_LifeController>();
         model = GetComponent<SP_CharacterModel>();
-        SpLifeController.AssignLife(baseStats.MaxLife);
-        model.AssignStats(baseStats);
-        SpLifeController.OnDie += Die;
+        _spLifeController.AssignLife(baseStats.MaxLife);
+        model.AssignStats(baseStats, _spLifeController);
+        _spLifeController.OnDie += Die;
         _spWeapon = GetComponent<SP_Weapon>();
 
     }
@@ -57,6 +57,7 @@ public class SP_CharacterController : MonoBehaviourPun
 
     public bool IsAlive()
     {
-        return SpLifeController.IsAlive();
+        return _spLifeController.IsAlive();
     }
+
 }

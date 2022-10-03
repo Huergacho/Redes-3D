@@ -2,7 +2,7 @@ using Photon.Pun;
 using UnityEngine;
 using System;
 
-[RequireComponent(typeof(MP_LifeController))]
+[RequireComponent(typeof(SP_LifeController))]
 public class SP_EnemyController : MonoBehaviourPun
 {
     private SP_LifeController _spLifeController;
@@ -13,31 +13,27 @@ public class SP_EnemyController : MonoBehaviourPun
 
     #region Target
 
-    public SP_CharacterController targetController;
-    private Transform _targetTr => targetController.transform;
+    public SP_CharacterModel targetModel;
+    private Transform _targetTr => targetModel.transform;
 
     #endregion
    
-
     #region FSM and DT
     [SerializeField] private ObstacleAvoidanceScriptableObject obstacleAvoidance;
     public ObstacleAvoidance Behaviour { get; private set; }
-
     
     private bool _waitForIdleState;
     private FSM<EnemyStatesConstants> _fsm;
     private INode _root;
     private bool _previousInSightState;
     private bool _currentInSightState;
-
     
     #endregion
     
     #region Actions
     public event Action<Vector3> OnMove;
-    public event Action OnChase;
+    public event Action<Vector3> OnLookAt;
     public event Action OnIdle;
-
     public event Action OnAttack;
 
     #endregion
@@ -46,6 +42,11 @@ public class SP_EnemyController : MonoBehaviourPun
     {
         _spLifeController = GetComponent<SP_LifeController>();
         _spLifeController.AssignLife(_enemyStats.maxLife);
+        _enemyModel = GetComponent<SP_EnemyModel>();
+        Behaviour = new ObstacleAvoidance(transform, null, obstacleAvoidance.radius,
+            obstacleAvoidance.maxObjs, obstacleAvoidance.obstaclesMask,
+            obstacleAvoidance.multiplier, targetModel, obstacleAvoidance.timePrediction,
+            ObstacleAvoidance.DesiredBehaviour.Seek);
     }
     void Start()
     {
@@ -69,7 +70,7 @@ public class SP_EnemyController : MonoBehaviourPun
         var DidSightChangeToAttack = new QuestionNode(SightStateChanged, goToChase, attemptPlayerKill);
         var IsInSight = new QuestionNode(LastInSightState, DidSightChangeToAttack, attemptPlayerKill);
         
-        var IsPlayerAlive = new QuestionNode(() => targetController.IsAlive(), IsInSight, goToIdle);
+        var IsPlayerAlive = new QuestionNode(() => targetModel.GetLife().IsAlive(), IsInSight, goToIdle);
          
         _root = IsPlayerAlive;
     }   
@@ -90,7 +91,7 @@ public class SP_EnemyController : MonoBehaviourPun
     {
         var distance = Vector3.Distance(transform.position, _targetTr.position);
 
-        return distance <= _enemyStats.distanceToAttack;
+        return distance < _enemyStats.distanceToAttack;
     }
     private bool IsIdleStateCooldown()
     {
@@ -114,8 +115,8 @@ public class SP_EnemyController : MonoBehaviourPun
         var idle = new EnemyIdleState<EnemyStatesConstants>(_enemyStats.idleTimeLenght, CheckPlayerInSight,
             OnIdleCommand, _root, SetIdleStateCooldown);
        
-        var chase = new EnemyChaseState<EnemyStatesConstants>(_targetTr, _root, Behaviour, OnChaseCommand,
-            _enemyStats.attackTimeLenght, OnMoveCommand,SetIdleStateCooldown);
+        var chase = new EnemyChaseState<EnemyStatesConstants>(_targetTr, _root, Behaviour, 
+            _enemyStats.attackTimeLenght, OnMoveCommand,OnLookAtCommand, SetIdleStateCooldown);
         
         var attack = new EnemyAttackState<EnemyStatesConstants>(_root, OnAttackCommand, _enemyStats.attackTimeLenght, 
             SetIdleStateCooldown);
@@ -138,8 +139,7 @@ public class SP_EnemyController : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-        if (!targetController.IsAlive()) return;
-        
+        if (!targetModel.GetLife().IsAlive()) return;
         _fsm.UpdateState();
 
     }
@@ -155,9 +155,9 @@ public class SP_EnemyController : MonoBehaviourPun
         SetIdleStateCooldown(true);
     }
 
-    private void OnChaseCommand()
+    private void OnLookAtCommand(Vector3 dir)
     {
-        OnChase?.Invoke();
+        OnLookAt?.Invoke(dir);
     }
 
     private void OnAttackCommand()

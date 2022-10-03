@@ -15,7 +15,10 @@ public class SP_EnemyModel : MonoBehaviour
 
     public void Subscribe(SP_EnemyController controller)
     {
-        // eventos del controlador
+        controller.OnMove += Move;
+        controller.OnAttack += Attack;
+        controller.OnIdle += Idle;
+        controller.OnLookAt += LookAt;
     }
 
     private void Idle()
@@ -25,7 +28,9 @@ public class SP_EnemyModel : MonoBehaviour
 
     private void Move(Vector3 dir)
     {
-        _rb.velocity = dir.normalized * data.speed;
+        var dirNorm = dir.normalized;
+        _rb.velocity = dirNorm * data.speed;
+ 
     }
 
     private void LookAt(Vector3 dir)
@@ -35,6 +40,7 @@ public class SP_EnemyModel : MonoBehaviour
 
     private void Attack()
     {
+        Debug.Log("Pew pew");
     }
 
     private void Die()
