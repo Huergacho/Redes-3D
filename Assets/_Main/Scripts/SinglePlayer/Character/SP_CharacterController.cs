@@ -5,9 +5,9 @@ using UnityEngine;
 using UnityEngine.PlayerLoop;
 
 public class SP_CharacterController : MonoBehaviourPun
-{ private CharacterModel model;
-    private SP_LifeController _mpLifeController;
-    private Weapon _weapon;
+{   private CharacterModel model;
+    protected SP_LifeController _mpLifeController;
+    protected Weapon _weapon;
     [SerializeField] private float maxLife;
 
     // Start is called before the first frame update

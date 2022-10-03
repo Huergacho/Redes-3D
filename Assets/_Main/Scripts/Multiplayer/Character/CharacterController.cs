@@ -6,11 +6,6 @@ using Photon.Realtime;
 [RequireComponent(typeof(CharacterModel),typeof(Weapon),typeof(MP_LifeController))]
 public class CharacterController : SP_CharacterController
 {
-    private CharacterModel model;
-    private MP_LifeController _mpLifeController;
-    private Weapon _weapon;
-    [SerializeField] private float maxLife;
-
     // Start is called before the first frame update
     protected override void Awake()
     {

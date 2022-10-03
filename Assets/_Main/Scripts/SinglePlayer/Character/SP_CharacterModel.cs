@@ -5,11 +5,11 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 
 public class SP_CharacterModel : MonoBehaviourPun
-{
-    [SerializeField] public float speed;
-    private Rigidbody _rb;
+{ 
+    public float speed;
+    protected Rigidbody _rb;
 
-    private Camera _camera;
+    protected Camera _camera;
     // Start is called before the first frame update
     void Start()
     {
