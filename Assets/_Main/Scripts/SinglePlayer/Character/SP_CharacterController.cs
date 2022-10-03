@@ -50,4 +50,9 @@ public class SP_CharacterController : MonoBehaviourPun
     {
         Destroy(gameObject);
     }
+
+    public bool IsAlive()
+    {
+        return _mpLifeController.IsAlive();
+    }
 }

@@ -5,7 +5,8 @@ public class EnemyModel : MonoBehaviour
     public EnemySO data;
     private Rigidbody _rb;
     private Transform _transform;
-
+    [SerializeField] private LineOfSightAI _lineOfSightAI;
+    public LineOfSightAI LineOfSightAI => _lineOfSightAI;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
