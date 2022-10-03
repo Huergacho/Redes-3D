@@ -1,41 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using Photon.Pun;
-using Photon.Realtime;
-[RequireComponent(typeof(CharacterModel),typeof(Weapon),typeof(LifeController))]
-public class CharacterController : MonoBehaviourPun
-{
-    private CharacterModel model;
-    private LifeController _lifeController;
+using UnityEngine;
+using UnityEngine.PlayerLoop;
+
+public class SP_CharacterController : MonoBehaviourPun
+{ private CharacterModel model;
+    private SP_LifeController _mpLifeController;
     private Weapon _weapon;
     [SerializeField] private float maxLife;
 
     // Start is called before the first frame update
-    private void Awake()
+    protected virtual void Awake()
     {
-        if (!photonView.IsMine)
-        {
-            Destroy(this); 
-        }
-
-        _lifeController = GetComponent<LifeController>();
-        _lifeController.AssignLife(maxLife);
-        _lifeController.onDie += Die;
+        _mpLifeController = GetComponent<SP_LifeController>();
+        _mpLifeController.AssignLife(maxLife);
+        _mpLifeController.OnDie += Die;
         _weapon = GetComponent<Weapon>();
         model = GetComponent<CharacterModel>();
 
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (photonView.IsMine)
-        {
+    protected virtual void Update()
+    {   
             MoveCommand();
             Shoot();
             model.CorrectRotation();
-        }
 
     }
     void MoveCommand()
@@ -55,8 +46,8 @@ public class CharacterController : MonoBehaviourPun
         }
     }
 
-    void Die()
+    protected virtual void Die()
     {
-        PhotonNetwork.Destroy(gameObject);
+        Destroy(gameObject);
     }
 }

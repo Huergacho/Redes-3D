@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
-public class CharacterModel : MonoBehaviour
+
+public class SP_CharacterModel : MonoBehaviourPun
 {
     [SerializeField] public float speed;
     private Rigidbody _rb;
@@ -36,7 +38,5 @@ public class CharacterModel : MonoBehaviour
             if (distance >= 1f)
                 transform.LookAt(target);
         }
-    }  
-    
-    
+    }
 }

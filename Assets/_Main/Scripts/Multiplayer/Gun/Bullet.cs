@@ -48,7 +48,7 @@ public class Bullet : MonoBehaviourPun
 
     private void MakeDamage(GameObject target)
     {
-        var life = target.GetComponent<LifeController>();
+        var life = target.GetComponent<MP_LifeController>();
         if (life != null)
         {
             life.TakeDamage(damage);

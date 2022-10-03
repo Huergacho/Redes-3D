@@ -4,18 +4,18 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 
-[RequireComponent(typeof(LifeController))]
+[RequireComponent(typeof(MP_LifeController))]
 public class EnemyController : MonoBehaviourPun
 {
-    private LifeController _lifeController;
+    private MP_LifeController _mpLifeController;
     [SerializeField]
     private EnemySO _enemyStats;
     // Start is called before the first frame update
     void Start()
     {
-        _lifeController = GetComponent<LifeController>();
-        _lifeController.AssignLife(_enemyStats.maxLife);
-        _lifeController.onDie += Die;
+        _mpLifeController = GetComponent<MP_LifeController>();
+        _mpLifeController.AssignLife(_enemyStats.maxLife);
+        _mpLifeController.OnDie += Die;
     }
 
     // Update is called once per frame
