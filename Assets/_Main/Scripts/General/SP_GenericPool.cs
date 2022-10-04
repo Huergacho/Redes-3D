@@ -74,8 +74,8 @@ public class SP_GenericPool : MonoBehaviourPun
         
     }
 
-    protected GameObject InstancePoolObject(GameObject objectToSpawn, Transform transform)
+    protected virtual GameObject InstancePoolObject(GameObject objectToSpawn, Transform desiredPos)
     {
-        return Instantiate(objectToSpawn, transform);
+        return Instantiate(objectToSpawn, desiredPos);
     }
 }

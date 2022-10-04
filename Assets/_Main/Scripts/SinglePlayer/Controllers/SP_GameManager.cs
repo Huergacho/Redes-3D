@@ -24,13 +24,18 @@ public class SP_GameManager : MonoBehaviourPun
         }
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         canAddRound = true;
         currentChangeCooldown = roundChangeCooldown;
     }
 
     protected virtual void Update()
+    {
+       CountRounds();
+    }
+
+    protected virtual void CountRounds()
     {
         if (canAddRound)
         {

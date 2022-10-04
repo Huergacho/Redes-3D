@@ -8,19 +8,9 @@ using Random = UnityEngine.Random;
 
 public class SP_EnemySpawner : MonoBehaviourPun
 {
-    [SerializeField] private SP_EnemyController enemyToInstatiate;
-    [SerializeField] private Transform[] enemySpawnPoints;
-    private SP_CharacterModel _target;
-    private void Awake()
-    {
-    }
+    [SerializeField] protected Transform[] enemySpawnPoints;
 
-    private void Start()
-    {
-        _target = SP_GameManager.instance.Character;
-    }
-
-    private int GetRandomIndex()
+    protected int GetRandomIndex()
     {
         var index = Random.Range(0, enemySpawnPoints.Length);
         return index;
@@ -29,7 +19,5 @@ public class SP_EnemySpawner : MonoBehaviourPun
     {
         var newEnemy = SP_GenericPool.Instance.SpawnFromPool("Goblin", enemySpawnPoints[GetRandomIndex()].position,
             Quaternion.identity);
-        //newEnemy.GetComponent<SP_EnemyController>().AssignTarget(_target);
-        //var newEnemy = Instantiate(enemyToInstatiate, enemySpawnPoints[GetRandomIndex()]);
     }
 }
