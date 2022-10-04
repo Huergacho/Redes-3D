@@ -29,7 +29,7 @@ public class SP_GenericPool : MonoBehaviourPun
             Queue<GameObject> objectPool = new Queue<GameObject>();
             for (int i = 0; i <pool.poolSize; i++)
             {
-                GameObject obj = InstancePoolObject(pool.objectToPool, pool.objectToPool.transform);
+                GameObject obj = InstancePoolObject(pool.objectToPool, transform);
                 if(pool.objectFather != null)
                 { 
                     obj.transform.parent = pool.objectFather.transform;
