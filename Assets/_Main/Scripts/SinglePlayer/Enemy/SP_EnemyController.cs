@@ -4,7 +4,7 @@ using System;
 using Photon.Pun.Demo.PunBasics;
 
 [RequireComponent(typeof(SP_LifeController))]
-public class SP_EnemyController : MonoBehaviourPun
+public class SP_EnemyController : MonoBehaviourPun, IPooleable
 {
     private SP_LifeController _spLifeController;
     [SerializeField]
@@ -169,7 +169,7 @@ public class SP_EnemyController : MonoBehaviourPun
 
     private void OnDieCommand()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     public void AssignTarget(SP_CharacterModel data)
@@ -185,4 +185,9 @@ public class SP_EnemyController : MonoBehaviourPun
             ObstacleAvoidance.DesiredBehaviour.Seek);
     }
     #endregion
+
+    public void OnObjectSpawn()
+    {
+        _spLifeController.AssignLife(_enemyStats.maxLife);
+    }
 }

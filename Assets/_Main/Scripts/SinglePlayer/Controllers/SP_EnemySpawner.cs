@@ -27,6 +27,9 @@ public class SP_EnemySpawner : MonoBehaviourPun
     }
     public virtual void InstatiateEnemy()
     {
-        var newEnemy = Instantiate(enemyToInstatiate, enemySpawnPoints[GetRandomIndex()]);
+        var newEnemy = SP_GenericPool.Instance.SpawnFromPool("Goblin", enemySpawnPoints[GetRandomIndex()].position,
+            Quaternion.identity);
+        //newEnemy.GetComponent<SP_EnemyController>().AssignTarget(_target);
+        //var newEnemy = Instantiate(enemyToInstatiate, enemySpawnPoints[GetRandomIndex()]);
     }
 }
