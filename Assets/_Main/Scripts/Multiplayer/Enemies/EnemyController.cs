@@ -30,4 +30,6 @@ public class EnemyController : SP_EnemyController
         // Ver si disparamos por model o view por animación
         PhotonNetwork.Destroy(gameObject);
     }
+
+    
 }

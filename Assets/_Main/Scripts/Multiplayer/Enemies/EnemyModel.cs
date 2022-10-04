@@ -2,7 +2,7 @@
 
 public class EnemyModel : MonoBehaviour
 {
-    public EnemySO data;
+    private EnemySO _stats;
     private Rigidbody _rb;
     private Transform _transform;
     [SerializeField] private LineOfSightAI _lineOfSightAI;
@@ -20,7 +20,7 @@ public class EnemyModel : MonoBehaviour
 
     private void Move(Vector3 dir)
     {
-        _rb.velocity = dir.normalized * data.speed;
+        _rb.velocity = dir.normalized * _stats.speed;
     }
 
     private void LookAt(Vector3 dir)
@@ -34,5 +34,10 @@ public class EnemyModel : MonoBehaviour
 
     private void Die()
     {
+    }
+
+    public void AssignStats(EnemySO stats)
+    {
+        _stats = stats;
     }
 }

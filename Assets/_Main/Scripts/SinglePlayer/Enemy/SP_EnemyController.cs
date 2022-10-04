@@ -1,6 +1,7 @@
 using Photon.Pun;
 using UnityEngine;
 using System;
+using Photon.Pun.Demo.PunBasics;
 
 [RequireComponent(typeof(SP_LifeController))]
 public class SP_EnemyController : MonoBehaviourPun
@@ -10,7 +11,6 @@ public class SP_EnemyController : MonoBehaviourPun
     private EnemySO _enemyStats;
 
     private SP_EnemyModel _enemyModel;
-
     #region Target
 
     public SP_CharacterModel targetModel;
@@ -38,18 +38,20 @@ public class SP_EnemyController : MonoBehaviourPun
 
     #endregion
 
+   
     private void Awake()
     {
         _spLifeController = GetComponent<SP_LifeController>();
         _spLifeController.AssignLife(_enemyStats.maxLife);
         _enemyModel = GetComponent<SP_EnemyModel>();
-        Behaviour = new ObstacleAvoidance(transform, null, obstacleAvoidance.radius,
-            obstacleAvoidance.maxObjs, obstacleAvoidance.obstaclesMask,
-            obstacleAvoidance.multiplier, targetModel, obstacleAvoidance.timePrediction,
-            ObstacleAvoidance.DesiredBehaviour.Seek);
     }
     void Start()
     {
+        targetModel = SP_GameManager.instance.Character;
+        if (targetModel != null)
+        {
+            InitializeOBS();
+        }
         _spLifeController.OnDie += OnDieCommand;
         _enemyModel.Subscribe(this);
         InitDecisionTree();
@@ -168,6 +170,19 @@ public class SP_EnemyController : MonoBehaviourPun
     private void OnDieCommand()
     {
         Destroy(gameObject);
+    }
+
+    public void AssignTarget(SP_CharacterModel data)
+    {
+        targetModel = data;
+    }
+
+    public void InitializeOBS()
+    {
+        Behaviour = new ObstacleAvoidance(transform, null, obstacleAvoidance.radius,
+            obstacleAvoidance.maxObjs, obstacleAvoidance.obstaclesMask,
+            obstacleAvoidance.multiplier, targetModel, obstacleAvoidance.timePrediction,
+            ObstacleAvoidance.DesiredBehaviour.Seek);
     }
     #endregion
 }
