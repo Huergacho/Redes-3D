@@ -42,7 +42,7 @@ public class MP_EnemyController : SP_EnemyController
     private void OnDieCommand()
     {
         // Ver si disparamos por model o view por animación
-        PhotonNetwork.Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     

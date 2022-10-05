@@ -32,22 +32,20 @@ public class SP_GameManager : MonoBehaviourPun
 
     protected virtual void Update()
     {
-       CountRounds();
+        if(_canAddRound) CountRounds();
     }
 
     protected virtual void CountRounds()
     {
-        if (_canAddRound)
-        {
-            _currentChangeCooldown -= Time.deltaTime;
-        }
+        _currentChangeCooldown -= Time.deltaTime;
 
-        if (_currentChangeCooldown <= 0 && _canAddRound)
+        if (_currentChangeCooldown <= 0)
         {
             AddRound();
-            print("llegue hasta aca");
-            _currentChangeCooldown = roundChangeCooldown;
             _canAddRound = false;
+            RoundCount++;
+
+            _currentChangeCooldown = roundChangeCooldown;
         }
     }
 
@@ -57,7 +55,6 @@ public class SP_GameManager : MonoBehaviourPun
     }
     protected virtual void AddRound()
     {
-        RoundCount++;
         for (int i = 0; i < enemySpawnQuantity; i++)
         {
              _enemySpawner.InstatiateEnemy();

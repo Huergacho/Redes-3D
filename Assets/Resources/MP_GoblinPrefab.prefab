@@ -143,7 +143,6 @@ MonoBehaviour:
   _enemyStats: {fileID: 11400000, guid: 4ff3d64a585085c4fada632a5153c88c, type: 2}
   targetModel: {fileID: 0}
   obstacleAvoidance: {fileID: 11400000, guid: 139aca8684b84574a809bb1c5b8b1de5, type: 2}
-  _enemyStats: {fileID: 11400000, guid: 4ff3d64a585085c4fada632a5153c88c, type: 2}
 --- !u!114 &4748996930167278445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,6 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14f649935b884ea19be61f327d27718e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 0}
   _lineOfSightAI: {fileID: 4748996928726698153}
 --- !u!114 &4748996930167278444
 MonoBehaviour:

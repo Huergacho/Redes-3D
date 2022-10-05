@@ -61,8 +61,4 @@ public class MP_GameManager : SP_GameManager
     //     }
     //     
     // }
-    public void GetPlayer()
-    {
-        
-    }
 }
