@@ -8,9 +8,9 @@ public class SP_EnemyController : MonoBehaviourPun, IPooleable
 {
     private SP_LifeController _spLifeController;
     [SerializeField]
-    private EnemySO _enemyStats;
+    protected EnemySO _enemyStats;
 
-    private SP_EnemyModel _enemyModel;
+    protected SP_EnemyModel _enemyModel;
     #region Target
 
     public SP_CharacterModel targetModel;
@@ -45,20 +45,14 @@ public class SP_EnemyController : MonoBehaviourPun, IPooleable
         _spLifeController.AssignLife(_enemyStats.maxLife);
         _enemyModel = GetComponent<SP_EnemyModel>();
     }
-    void Start()
+    protected virtual void Start()
     {
-        targetModel = SP_GameManager.instance.Character;
-        if (targetModel != null)
-        {
-            InitializeOBS();
-        }
-        _spLifeController.OnDie += OnDieCommand;
-        _enemyModel.Subscribe(this);
-        InitDecisionTree();
-        InitFsm();
+        _enemyModel.AssignStats(_enemyStats);
+        AssignTarget();
+        InitializeVoids();
     }
 
-    void InitDecisionTree()
+    protected void InitDecisionTree()
     {
   
         // Actions
@@ -110,7 +104,7 @@ public class SP_EnemyController : MonoBehaviourPun, IPooleable
         return playerIsInSight;
     }
 
-    void InitFsm()
+    protected void InitFsm()
     {
         //--------------- FSM Creation -------------------//                
         // States Creation
@@ -172,11 +166,22 @@ public class SP_EnemyController : MonoBehaviourPun, IPooleable
         gameObject.SetActive(false);
     }
 
-    public void AssignTarget(SP_CharacterModel data)
+    protected virtual void AssignTarget()
     {
-        targetModel = data;
+        targetModel = SP_GameManager.SPInstance.Character;
     }
 
+    protected virtual void InitializeVoids()
+    {
+        if (targetModel != null)
+        {
+            InitializeOBS();
+        }
+        _spLifeController.OnDie += OnDieCommand;
+        _enemyModel.Subscribe(this);
+        InitDecisionTree();
+        InitFsm();
+    }
     public void InitializeOBS()
     {
         Behaviour = new ObstacleAvoidance(transform, null, obstacleAvoidance.radius,

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class EnemyView : MonoBehaviour
+public class MP_EnemyView : MonoBehaviour
 {
     private Animator _animator;
 
@@ -9,7 +9,7 @@ public class EnemyView : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    public void Subscribe(EnemyController controller)
+    public void Subscribe(MP_EnemyController controller)
     {
         // eventos del controlador
     }

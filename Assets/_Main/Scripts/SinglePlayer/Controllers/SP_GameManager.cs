@@ -6,18 +6,18 @@ using UnityEngine.Serialization;
 
 public class SP_GameManager : MonoBehaviourPun
 {
-    [HideInInspector]public static SP_GameManager instance;
-    [SerializeField] private int enemySpawnQuantity;
+    [HideInInspector]public static SP_GameManager SPInstance;
+    [SerializeField] protected int enemySpawnQuantity;
     [SerializeField]protected SP_EnemySpawner _enemySpawner;
-    [SerializeField]protected SP_CharacterModel _character;
+    [SerializeField]private SP_CharacterModel _character;
     public SP_CharacterModel Character => _character;
-    [SerializeField]private float roundChangeCooldown;
-    private float currentChangeCooldown;
-    private bool canAddRound;
-    public int _roundCount { get; private set; }
+    [SerializeField]protected float roundChangeCooldown;
+    private float _currentChangeCooldown;
+    private bool _canAddRound;
+    private int RoundCount { get; set; }
     protected virtual void Awake()
     {
-        instance = this;
+        SPInstance = this;
         if (Character == null)
         {
             InstanceCharacter();
@@ -26,8 +26,8 @@ public class SP_GameManager : MonoBehaviourPun
 
     protected virtual void Start()
     {
-        canAddRound = true;
-        currentChangeCooldown = roundChangeCooldown;
+        _canAddRound = true;
+        _currentChangeCooldown = roundChangeCooldown;
     }
 
     protected virtual void Update()
@@ -37,16 +37,17 @@ public class SP_GameManager : MonoBehaviourPun
 
     protected virtual void CountRounds()
     {
-        if (canAddRound)
+        if (_canAddRound)
         {
-            currentChangeCooldown -= Time.deltaTime;
+            _currentChangeCooldown -= Time.deltaTime;
         }
 
-        if (currentChangeCooldown <= 0 && canAddRound)
+        if (_currentChangeCooldown <= 0 && _canAddRound)
         {
             AddRound();
-            currentChangeCooldown = roundChangeCooldown;
-            canAddRound = false;
+            print("llegue hasta aca");
+            _currentChangeCooldown = roundChangeCooldown;
+            _canAddRound = false;
         }
     }
 
@@ -54,9 +55,9 @@ public class SP_GameManager : MonoBehaviourPun
     {
         Instantiate(Character);
     }
-    private void AddRound()
+    protected virtual void AddRound()
     {
-        _roundCount++;
+        RoundCount++;
         for (int i = 0; i < enemySpawnQuantity; i++)
         {
              _enemySpawner.InstatiateEnemy();

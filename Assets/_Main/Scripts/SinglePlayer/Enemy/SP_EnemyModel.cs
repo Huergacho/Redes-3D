@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
-public class SP_EnemyModel : MonoBehaviour
+public class SP_EnemyModel : MonoBehaviourPun
 {
     public EnemySO data;
     private Rigidbody _rb;
     private Transform _transform;
-    [SerializeField] private LineOfSightAI _lineOfSightAI;
+    [SerializeField] protected LineOfSightAI _lineOfSightAI;
     public LineOfSightAI LineOfSightAI => _lineOfSightAI;
     private void Awake()
     {
@@ -45,5 +46,10 @@ public class SP_EnemyModel : MonoBehaviour
 
     private void Die()
     {
+    }
+
+    public void AssignStats(EnemySO stats)
+    {
+        data = stats;
     }
 }

@@ -9,7 +9,7 @@ public class SP_EnemyView : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    public void Subscribe(EnemyController controller)
+    public void Subscribe(MP_EnemyController controller)
     {
         // eventos del controlador
     }
