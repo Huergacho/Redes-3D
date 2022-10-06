@@ -2,22 +2,28 @@ using System;
 using System.Collections;
 using Photon.Pun;
 using UnityEngine;
+using Photon.Pun;
 public class SP_RoundManager : MonoBehaviourPun
     {
         [SerializeField]protected float roundChangeCooldown;
         [SerializeField] protected SP_EnemySpawner _enemySpawner;
         [SerializeField]private int RoundCount;
+        [SerializeField] private int ProvisionalEnemies;
 
-        protected void Awake()
+        protected virtual void Start()
         {
-            _enemySpawner = GetComponent<SP_EnemySpawner>();
+            CallToSpawn();
         }
-        
+
         protected virtual void AddRound()
         {
             RoundCount++;
         }
 
+        protected virtual void CallToSpawn()
+        {
+            StartCoroutine(SpawnEnemies(ProvisionalEnemies));
+        }
         IEnumerator SpawnEnemies(int enemySpawnQuantity)
         {
             AddRound();

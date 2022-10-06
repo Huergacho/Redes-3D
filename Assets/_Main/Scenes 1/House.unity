@@ -1346,3 +1346,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: adb1055c3f18c4c59936b3c9356fd0c7, type: 3}
+--- !u!1 &7340399194739160467 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7340399194895847766, guid: adb1055c3f18c4c59936b3c9356fd0c7, type: 3}
+  m_PrefabInstance: {fileID: 7340399194739160466}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7340399194739160468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7340399194739160467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ff8f9edab847188df47b2a83e656fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roundChangeCooldown: 3
+  _enemySpawner: {fileID: 1461149593}
+  RoundCount: 0
+  ProvisionalEnemies: 3
