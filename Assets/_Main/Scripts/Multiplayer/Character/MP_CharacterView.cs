@@ -1,22 +1,20 @@
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-public class MP_CharacterView : MonoBehaviourPun
+public class MP_CharacterView : SP_CharacterView
 {
     private Identificator _identificator;
-    [SerializeField] private Identificator _identificatorPrefab;
 
-    
+
 
     private void Start()
     {
        var canvas = GameObject.Find("Canvas");
-       _identificator = GameObject.Instantiate<Identificator>(_identificatorPrefab, canvas.transform);
+       _identificator = GameObject.Instantiate<Identificator>(identificatorPrefab, canvas.transform);
         _identificator.SetTarget(transform);  
         if (photonView.IsMine)
         {
-          //  photonView.RPC("SetColor",RpcTarget.AllBuffered);
-          SetColor();
+            SetColor();
         }
         else
         {
@@ -34,7 +32,6 @@ public class MP_CharacterView : MonoBehaviourPun
     {
         if (_identificator != null)
         {
-           var newColor = Random.ColorHSV();
             _identificator.SetColor(photonView.OwnerActorNr);
         }
     }
