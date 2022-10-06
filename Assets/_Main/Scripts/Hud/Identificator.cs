@@ -30,6 +30,10 @@ public class Identificator : MonoBehaviourPun
       _colorIdent.color = colorBucket[playerIndex];
   }
 
+  public Image GetColor()
+  {
+    return _colorIdent;
+  }
   private void Update()
   {
       if (_target != null)

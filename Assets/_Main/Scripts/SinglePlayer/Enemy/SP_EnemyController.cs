@@ -178,6 +178,7 @@ public class SP_EnemyController : MonoBehaviourPun, IPooleable
             InitializeOBS();
         }
         _spLifeController.OnDie += OnDieCommand;
+        _spLifeController.OnTakeHit += targetModel.GetComponent<SP_CharacterController>().AddPoints;
         _enemyModel.Subscribe(this);
         InitDecisionTree();
         InitFsm();

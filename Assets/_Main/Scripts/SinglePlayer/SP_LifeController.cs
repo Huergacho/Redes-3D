@@ -5,6 +5,7 @@ public class SP_LifeController : MonoBehaviourPun
 {
     private float _currentLife;
     public event Action OnDie;
+    public event Action OnTakeHit;
     public void AssignLife(float data)
     {
         _currentLife = data;
@@ -15,6 +16,7 @@ public class SP_LifeController : MonoBehaviourPun
         {
             Die();
         }
+        OnTakeHit?.Invoke();
         _currentLife -= damage;
         }
 

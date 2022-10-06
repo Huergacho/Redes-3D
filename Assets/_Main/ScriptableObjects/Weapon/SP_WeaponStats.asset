@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00a41afc2a10642c68827aa78807a259, type: 3}
   m_Name: SP_WeaponStats
   m_EditorClassIdentifier: 
-  fireRate: 3
-  weaponDamage: 2
+  fireRate: 0.5
+  weaponDamage: 1
   bulletPrefab: {fileID: 2689428604401956391, guid: b40140e21f4a0dc4788eb9748843585b, type: 3}

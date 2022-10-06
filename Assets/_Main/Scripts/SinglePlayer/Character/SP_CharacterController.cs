@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using _Main.ScriptableObjects.Character;
@@ -13,6 +14,9 @@ public class SP_CharacterController : MonoBehaviourPun
     private SP_LifeController _spLifeController;
     private SP_Weapon _spWeapon;
 
+    [SerializeField] private int currentPoints;
+
+    public event Action<int> addPoints;
     // Start is called before the first frame update
     protected virtual void Awake()
     {
@@ -60,4 +64,9 @@ public class SP_CharacterController : MonoBehaviourPun
         return _spLifeController.IsAlive();
     }
 
+    public void AddPoints()
+    {
+        currentPoints++;
+        addPoints?.Invoke(currentPoints);
+    }
 }
