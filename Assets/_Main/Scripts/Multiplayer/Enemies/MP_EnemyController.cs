@@ -35,7 +35,7 @@ public class MP_EnemyController : SP_EnemyController
     {
         int playerCount = PhotonNetwork.CountOfPlayers;
         int randomPlayerIndex = Random.Range(0, playerCount);
-        targetModel = MP_GameManager.MPInstance.characters[randomPlayerIndex];
+        targetModel = MP_GameManager.MpInstance.characters[randomPlayerIndex];
     }
 
 
