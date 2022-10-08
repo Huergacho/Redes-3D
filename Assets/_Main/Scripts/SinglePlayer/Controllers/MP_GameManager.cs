@@ -15,11 +15,8 @@ public class MP_GameManager : SP_GameManager
     }
     protected override void InstanceCharacter()
     {
-        if (photonView.IsMine)
-        {
-            var targetObject = PhotonNetwork.Instantiate(Character.name, spawn.position, Quaternion.identity);
+        var targetObject = PhotonNetwork.Instantiate(Character.name, spawn.position, Quaternion.identity);
             var obj = targetObject.GetComponent<MP_CharacterModel>();
             characters.Add(obj);
-        }
     }
 }

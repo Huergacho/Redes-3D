@@ -11,12 +11,13 @@ public class SP_CharacterController : MonoBehaviourPun
 {
     [SerializeField] private Stats baseStats;
     private SP_CharacterModel model;
+    public SP_CharacterModel Model => model;
     private SP_LifeController _spLifeController;
     private SP_Weapon _spWeapon;
 
     [SerializeField] private int currentPoints;
 
-    public event Action<int> addPoints;
+    public event Action<int> OnAddPoints;
     // Start is called before the first frame update
     protected virtual void Awake()
     {
@@ -64,9 +65,9 @@ public class SP_CharacterController : MonoBehaviourPun
         return _spLifeController.IsAlive();
     }
 
-    public void AddPoints()
+    public virtual void AddPoints()
     {
         currentPoints++;
-        addPoints?.Invoke(currentPoints);
+        OnAddPoints?.Invoke(currentPoints);
     }
 }

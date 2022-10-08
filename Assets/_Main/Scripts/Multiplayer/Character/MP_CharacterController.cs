@@ -29,4 +29,12 @@ public class MP_CharacterController : SP_CharacterController
     {
         PhotonNetwork.Destroy(gameObject);
     }
+
+    public override void AddPoints()
+    {
+        if (photonView.IsMine)
+        {
+            base.AddPoints();
+        }
+    }
 }

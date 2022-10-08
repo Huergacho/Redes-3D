@@ -16,7 +16,7 @@ public class SP_LifeController : MonoBehaviourPun
         {
             Die();
         }
-        OnTakeHit?.Invoke();
+        TakeHit();
         _currentLife -= damage;
         }
 
@@ -27,5 +27,10 @@ public class SP_LifeController : MonoBehaviourPun
     protected virtual void Die()
     {
         OnDie?.Invoke();
+    }
+
+    protected virtual void TakeHit()
+    {
+        OnTakeHit?.Invoke();
     }
 }
