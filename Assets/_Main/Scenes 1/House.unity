@@ -1289,6 +1289,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5107107}
     - target: {fileID: 7340399194895847764, guid: adb1055c3f18c4c59936b3c9356fd0c7, type: 3}
+      propertyPath: _character
+      value: 
+      objectReference: {fileID: 3146871593758041945, guid: 810505a17efc1e14bb61ab5df458eafd, type: 3}
+    - target: {fileID: 7340399194895847764, guid: adb1055c3f18c4c59936b3c9356fd0c7, type: 3}
       propertyPath: _enemySpawner
       value: 
       objectReference: {fileID: 1461149593}

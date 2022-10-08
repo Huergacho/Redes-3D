@@ -45,5 +45,8 @@ public class MP_EnemyController : SP_EnemyController
         gameObject.SetActive(false);
     }
 
-    
+    public override void OnObjectSpawn()
+    {
+        _mpLifeController.AssignLife(_enemyStats.maxLife);
+    }
 }

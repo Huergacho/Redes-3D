@@ -192,7 +192,7 @@ public class SP_EnemyController : MonoBehaviourPun, IPooleable
     }
     #endregion
 
-    public void OnObjectSpawn()
+    public virtual void OnObjectSpawn()
     {
         _spLifeController.AssignLife(_enemyStats.maxLife);
     }
