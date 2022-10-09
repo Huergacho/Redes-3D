@@ -1,11 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using _Main.ScriptableObjects.Character;
 using Photon.Pun;
-using UnityEditor.MPE;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class SP_CharacterController : MonoBehaviourPun
 {
