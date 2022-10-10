@@ -1,16 +1,17 @@
-using Photon.Pun;
 using UnityEngine;
 using TMPro;
 
 
 public class RoomItem : MonoBehaviour
 {
-    public TMP_Text roomName;
-    private LobbyManager manager;
+    [SerializeField]private TMP_Text roomName;
+    private LobbyManager _lobby;
+
+
 
     private void Start()
     {
-        manager = FindObjectOfType<LobbyManager>();
+        _lobby = FindObjectOfType<LobbyManager>();
     }
 
     public void SetRoomName(string roomNameParam)
@@ -20,7 +21,7 @@ public class RoomItem : MonoBehaviour
 
     public void OnClickItem()
     {
-        manager.JoinRoom(roomName.text);
+        _lobby.JoinRoom(roomName.text);
     }
 
 

@@ -1,14 +1,14 @@
 
-using System.Collections;
 using Photon.Pun;
 
 public class MP_RoundManager : SP_RoundManager
     {
         protected override void Start()
         {
-            if (photonView.IsMine)
+            if (Equals(photonView.Owner, PhotonNetwork.MasterClient))
             {
-                base.Start();
+               // base.Start();
+               print("blah");
             }
         }
 
