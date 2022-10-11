@@ -2,7 +2,6 @@ using System;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
-using Unity.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,12 +18,11 @@ public class PlayerItem : MonoBehaviourPunCallbacks
     public GameObject leftArrowB;
     public GameObject rightArrowB;
 
-    private PhotonView _view;
+    //private PhotonView _view;
     private void Awake()
     {
         _playerProperties = new ExitGames.Client.Photon.Hashtable();
         _backgroundImage = GetComponent<Image>();
-        _view = GetComponent<PhotonView>();
     }
 
     public void SetPlayerInfo(Player player)
@@ -66,6 +64,7 @@ public class PlayerItem : MonoBehaviourPunCallbacks
 
     public void OnClickLeftArrow()
     {
+        
         _playerProperties[nameof(playerAvatar)] = (int)_playerProperties[nameof(playerAvatar)] == 0
             ? avatars.Length - 1
             : (int)_playerProperties[nameof(playerAvatar)] - 1;
@@ -73,6 +72,7 @@ public class PlayerItem : MonoBehaviourPunCallbacks
     }
     public void OnClickRighttArrow()
     {
+      
         _playerProperties[nameof(playerAvatar)] = (int)_playerProperties[nameof(playerAvatar)] == avatars.Length - 1
             ? 0
             : (int)_playerProperties[nameof(playerAvatar)] + 1;
