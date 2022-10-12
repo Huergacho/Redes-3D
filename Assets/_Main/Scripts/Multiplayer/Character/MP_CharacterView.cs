@@ -4,8 +4,8 @@ using Photon.Realtime;
 public class MP_CharacterView : SP_CharacterView
 {
     private Identificator _identificator;
-    private MP_PointCounter _pointCounter;
-    [SerializeField]private MP_PointCounter mp_PointCounterPrefab;
+    // private MP_PointCounter _pointCounter;
+    // private MP_PointCounter mp_PointCounterPrefab;
 
 
     private void Start()
@@ -13,17 +13,17 @@ public class MP_CharacterView : SP_CharacterView
        var canvas = GameObject.Find("Canvas");
        _identificator = GameObject.Instantiate<Identificator>(identificatorPrefab, canvas.transform);
         _identificator.SetTarget(transform);
-        _pointCounter = GameObject.Instantiate<MP_PointCounter>(mp_PointCounterPrefab, canvas.transform);
-        _pointCounter.SetTarget(this.GetComponent<MP_CharacterController>());
+        // _pointCounter = GameObject.Instantiate<MP_PointCounter>(mp_PointCounterPrefab, canvas.transform);
+        // _pointCounter.SetTarget(this.GetComponent<MP_CharacterController>());
         if (photonView.IsMine)
         {
             SetColor();
-            SetPointColor();
+            // SetPointColor();
         }
         else
         {
             photonView.RPC("RequestColor",photonView.Owner,PhotonNetwork.LocalPlayer);
-            photonView.RPC("RequestPointColor",photonView.Owner,PhotonNetwork.LocalPlayer);
+            // photonView.RPC("RequestPointColor",photonView.Owner,PhotonNetwork.LocalPlayer);
         }
     }
 
@@ -33,11 +33,11 @@ public class MP_CharacterView : SP_CharacterView
         photonView.RPC("SetColor",client);
     }
 
-    [PunRPC]
-    public void RequestPointColor(Player client)
-    {
-        photonView.RPC("SetPointColor",client);
-    }
+    // [PunRPC]
+    // public void RequestPointColor(Player client)
+    // {
+    //     photonView.RPC("SetPointColor",client);
+    // }
     [PunRPC]
     public void SetColor()
     {
@@ -47,14 +47,14 @@ public class MP_CharacterView : SP_CharacterView
         }
     }
 
-    [PunRPC]
-    public void SetPointColor()
-    {
-        if (_pointCounter)
-        {
-            _pointCounter.SetColor(_identificator.GetColor());
-        }
-    }
+    // [PunRPC]
+    // public void SetPointColor()
+    // {
+    //     // if (_pointCounter)
+    //     // {
+    //     //     _pointCounter.SetColor(_identificator.GetColor());
+    //     // }
+    // }
 
 
 }
