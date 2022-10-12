@@ -35,7 +35,7 @@ public class MP_EnemyController : SP_EnemyController
     protected override void AssignTarget()
     {
         int playerCount = PhotonNetwork.CountOfPlayers;
-        int randomPlayerIndex = Random.Range(0, playerCount);
+        int randomPlayerIndex = Random.Range(0, playerCount -1);
         targetModel = MP_GameManager.MpInstance.characters[randomPlayerIndex];
     }
 

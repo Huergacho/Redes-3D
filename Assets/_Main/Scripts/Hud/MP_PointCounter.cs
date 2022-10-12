@@ -7,14 +7,9 @@ using UnityEngine;
         {
             Initialize();
         }
-        [PunRPC]
         public override void UpdatePoints(int data)
         {
             if(photonView.IsMine)
             base.UpdatePoints(data);
-            else
-            {
-                photonView.RPC("UpdatePoints",photonView.Owner);
-            }
         }
     }

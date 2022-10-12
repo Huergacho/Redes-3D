@@ -8,7 +8,7 @@ public class SP_CharacterView : MonoBehaviourPun
 {
     [SerializeField]protected Identificator identificatorPrefab;
 
-    [SerializeField] protected SP_PointCounter spPointCounter;
+    [SerializeField] private SP_PointCounter spPointCounter;
     // Start is called before the first frame update
     void Start()
     {

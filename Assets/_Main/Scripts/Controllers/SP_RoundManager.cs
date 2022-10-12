@@ -13,6 +13,12 @@ public class SP_RoundManager : MonoBehaviourPun
         protected virtual void Start()
         {
             CallToSpawn();
+            GenerateSpawner();
+        }
+
+        protected virtual void GenerateSpawner()
+        {
+            Instantiate(_enemySpawner, transform.position,Quaternion.identity);
         }
 
         protected virtual void AddRound()
@@ -22,9 +28,13 @@ public class SP_RoundManager : MonoBehaviourPun
 
         protected virtual void CallToSpawn()
         {
-            StartCoroutine(SpawnEnemies(ProvisionalEnemies));
+            if (RoundCount < 3)
+            {
+                print("VAMO A INSTANCIAR");
+                StartCoroutine(SpawnEnemies(ProvisionalEnemies));
+            }
         }
-        IEnumerator SpawnEnemies(int enemySpawnQuantity)
+        protected virtual IEnumerator SpawnEnemies(int enemySpawnQuantity)
         {
             AddRound();
             yield return new WaitForSeconds(roundChangeCooldown);

@@ -272,4 +272,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   identificatorPrefab: {fileID: 513404939609549835, guid: e8e57c48a18528d49ae1688166e5c6e6, type: 3}
+  spPointCounter: {fileID: 7158761085645734865, guid: c144afbc64601406d9b52dddd8601612, type: 3}
   mp_PointCounterPrefab: {fileID: 3371779615361402478, guid: 0c7543c528f08443a8a54d2459cced78, type: 3}

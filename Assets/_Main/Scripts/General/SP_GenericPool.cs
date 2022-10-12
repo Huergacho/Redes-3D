@@ -17,7 +17,7 @@ public class SP_GenericPool : MonoBehaviourPun
     public List<Pool> poolsList;
     public Dictionary<string, Queue<GameObject>> PoolDictionary;
     public static SP_GenericPool Instance;
-    private void Awake()
+    protected virtual void Awake()
     {
         Instance = this;   
     }
@@ -34,6 +34,7 @@ public class SP_GenericPool : MonoBehaviourPun
                 { 
                     obj.transform.parent = pool.objectFather.transform;
                 }
+                print("Se instancia");
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }
