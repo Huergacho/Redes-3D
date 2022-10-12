@@ -127,7 +127,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.CurrentRoom == null) return;
 
-        foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
+        foreach (var player in PhotonNetwork.CurrentRoom.Players)
         {
             PlayerItem newPlayerItem = Instantiate(playerItemPref, playerItemParent);
             newPlayerItem.SetPlayerInfo(player.Value);

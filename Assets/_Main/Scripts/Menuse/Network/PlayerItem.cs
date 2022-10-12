@@ -9,7 +9,7 @@ public class PlayerItem : MonoBehaviourPunCallbacks
 {
     public TMP_Text playerName;
     private Player _player;
-    private ExitGames.Client.Photon.Hashtable _playerProperties;
+    ExitGames.Client.Photon.Hashtable _playerProperties;
 
     private Image _backgroundImage;
     public Color highlightColor;
@@ -53,7 +53,6 @@ public class PlayerItem : MonoBehaviourPunCallbacks
         if (player.CustomProperties.ContainsKey("playerAvatar"))
         {
             playerAvatar.sprite = avatars[(int)player.CustomProperties["playerAvatar"]];
-            // Para guardar el avatar si sale del room y vuelve a entrar
             _playerProperties["playerAvatar"] = (int)player.CustomProperties["playerAvatar"];
         }
         else
