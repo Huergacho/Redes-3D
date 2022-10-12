@@ -151,7 +151,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     public void OnClickPlayButton()
     {
-        PhotonNetwork.LoadLevel("Game");
+        PhotonNetwork.LoadLevel("House");
     }
     public void OnClickLeaveRoom()
     {

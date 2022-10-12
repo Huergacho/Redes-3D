@@ -3,12 +3,17 @@ using UnityEngine;
 using Photon.Pun;
 public class MP_EnemySpawner : SP_EnemySpawner
 {
+    private void Awake()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public override void InstatiateEnemy()
     {
-        if (photonView.IsMine)
-        {
-            var newEnemy = MP_GenericPool.Instance.SpawnFromPool("Goblin", enemySpawnPoints[GetRandomIndex()].position,
+        var newEnemy = MP_GenericPool.Instance.SpawnFromPool("Goblin", enemySpawnPoints[GetRandomIndex()].position,
             Quaternion.identity);
-        }
     }
 }

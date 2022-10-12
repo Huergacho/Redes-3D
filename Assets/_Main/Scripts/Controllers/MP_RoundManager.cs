@@ -7,7 +7,7 @@ public class MP_RoundManager : SP_RoundManager
     {
         protected override void Start()
         {
-            if (photonView.IsMine)
+            if (PhotonNetwork.IsMasterClient)
             {
                 base.Start();
                print("blah");
@@ -21,7 +21,8 @@ public class MP_RoundManager : SP_RoundManager
         protected override void GenerateSpawner()
         {
             print("SII");
-            PhotonNetwork.Instantiate(_enemySpawner.gameObject.name, transform.position, Quaternion.identity);
+           var newSpawner = PhotonNetwork.Instantiate(_enemySpawner.gameObject.name, transform.position, Quaternion.identity);
+           _enemySpawner = newSpawner.GetComponent<MP_EnemySpawner>();
         }
 
         // protected override void AddRound()
@@ -41,6 +42,7 @@ public class MP_RoundManager : SP_RoundManager
                 for (int i = 0; i < enemySpawnQuantity; i++)
                 {
                     _enemySpawner.InstatiateEnemy();
+                    yield return new WaitForSeconds(3f);
                 }
             }
  

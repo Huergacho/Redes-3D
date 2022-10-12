@@ -14,6 +14,7 @@ public class MP_CharacterController : SP_CharacterController
             Destroy(this); 
         }
         base.Awake();
+        PlayerSaver.Instance.characters.Add((MP_CharacterModel)Model);
     }
 
     // Update is called once per frame
