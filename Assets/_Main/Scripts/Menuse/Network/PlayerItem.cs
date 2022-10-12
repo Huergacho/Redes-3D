@@ -50,32 +50,32 @@ public class PlayerItem : MonoBehaviourPunCallbacks
 
     private void UpdatePlayerItem(Player player)
     {
-        if (player.CustomProperties.ContainsKey(nameof(playerAvatar)))
+        if (player.CustomProperties.ContainsKey("playerAvatar"))
         {
-            playerAvatar.sprite = avatars[(int)player.CustomProperties[nameof(playerAvatar)]];
+            playerAvatar.sprite = avatars[(int)player.CustomProperties["playerAvatar"]];
             // Para guardar el avatar si sale del room y vuelve a entrar
-            _playerProperties[nameof(playerAvatar)] = (int)player.CustomProperties[nameof(playerAvatar)];
+            _playerProperties["playerAvatar"] = (int)player.CustomProperties["playerAvatar"];
         }
         else
         {//Evita error si no tenia datos antes y rompe el alma si tocas flechitas
-            _playerProperties[nameof(playerAvatar)] = 0;
+            _playerProperties["playerAvatar"] = 0;
         }
     }
 
     public void OnClickLeftArrow()
     {
         
-        _playerProperties[nameof(playerAvatar)] = (int)_playerProperties[nameof(playerAvatar)] == 0
+        _playerProperties["playerAvatar"] = (int)_playerProperties["playerAvatar"] == 0
             ? avatars.Length - 1
-            : (int)_playerProperties[nameof(playerAvatar)] - 1;
+            : (int)_playerProperties["playerAvatar"] - 1;
         PhotonNetwork.SetPlayerCustomProperties(_playerProperties);
     }
     public void OnClickRighttArrow()
     {
       
-        _playerProperties[nameof(playerAvatar)] = (int)_playerProperties[nameof(playerAvatar)] == avatars.Length - 1
+        _playerProperties["playerAvatar"] = (int)_playerProperties["playerAvatar"] == avatars.Length - 1
             ? 0
-            : (int)_playerProperties[nameof(playerAvatar)] + 1;
+            : (int)_playerProperties["playerAvatar"] + 1;
         PhotonNetwork.SetPlayerCustomProperties(_playerProperties);
     }
 }
