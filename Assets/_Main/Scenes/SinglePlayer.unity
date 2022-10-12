@@ -1251,6 +1251,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1498513270838530926, guid: e8e57c48a18528d49ae1688166e5c6e6, type: 3}
   m_PrefabInstance: {fileID: 1681380409}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1723315346 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7158761085645734865, guid: c144afbc64601406d9b52dddd8601612, type: 3}
+  m_PrefabInstance: {fileID: 7158761085470122121}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36bf4af864c34ca48dc313f35a81ee62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1792804112
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1576,6 +1587,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4275807298085894343, guid: 46a4e4dbe9d2b45429318aee79842b35, type: 3}
+      propertyPath: spPointCounter
+      value: 
+      objectReference: {fileID: 1723315346}
     - target: {fileID: 4275807298085894343, guid: 46a4e4dbe9d2b45429318aee79842b35, type: 3}
       propertyPath: identificatorPrefab
       value: 
