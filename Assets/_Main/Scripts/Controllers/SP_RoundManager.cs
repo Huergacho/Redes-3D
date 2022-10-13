@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using Photon.Pun;
 using UnityEngine;
-using Photon.Pun;
+using Photon.Realtime;
 public class SP_RoundManager : MonoBehaviourPun
     {
         [SerializeField]protected float roundChangeCooldown;
@@ -15,6 +15,7 @@ public class SP_RoundManager : MonoBehaviourPun
             CallToSpawn();
             GenerateSpawner();
         }
+   
 
         protected virtual void GenerateSpawner()
         {
@@ -30,7 +31,6 @@ public class SP_RoundManager : MonoBehaviourPun
         {
             if (RoundCount < 3)
             {
-                print("VAMO A INSTANCIAR");
                 StartCoroutine(SpawnEnemies(ProvisionalEnemies));
             }
         }

@@ -7,20 +7,22 @@ using Photon.Realtime;
 [RequireComponent(typeof(MP_CharacterModel),typeof(MP_Weapon),typeof(MP_LifeController))]
 public class MP_CharacterController : SP_CharacterController
 {
-    // Start is called before the first frame update
     protected override void Awake()
     {
-        if (!photonView.IsMine)
-        {
-            Destroy(this); 
-        }
         base.Awake();
 
     }
 
     protected void Start()
-    { 
-        PlayerSaver.Instance.SetInstance().AddNewPlayer((MP_CharacterModel)Model);
+    {
+        // if (PhotonNetwork.IsMasterClient)
+        // {
+        //     PlayerSaver.Instance.AddNewPlayer((MP_CharacterModel)Model);
+        // }
+        // else
+        // {
+        //     photonView.RPC(nameof(PlayerSaver.Instance.ExternalAddPlayer),PhotonNetwork.MasterClient,(MP_CharacterModel)Model);
+        // }
     }
 
     // Update is called once per frame

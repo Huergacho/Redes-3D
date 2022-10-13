@@ -10,7 +10,6 @@ public class MP_RoundManager : SP_RoundManager
             if (PhotonNetwork.IsMasterClient)
             {
                 base.Start();
-               print("blah");
             }
             else
             {
@@ -18,21 +17,24 @@ public class MP_RoundManager : SP_RoundManager
             }
         }
 
-        protected override void GenerateSpawner()
+        [PunRPC]
+        protected override void CallToSpawn()
         {
-            print("SII");
-           var newSpawner = PhotonNetwork.Instantiate(_enemySpawner.gameObject.name, transform.position, Quaternion.identity);
-           _enemySpawner = newSpawner.GetComponent<MP_EnemySpawner>();
+            if (PhotonNetwork.IsMasterClient)
+            {
+                base.CallToSpawn();
+            }
+            else
+            {
+               photonView.RPC(nameof(CallToSpawn),PhotonNetwork.MasterClient); 
+            }
         }
-
-        // protected override void AddRound()
-        // {
-        //     if (photonView.IsMine)
-        //     {
-        //         base.AddRound();
-        //     }
-        // }
-        //
+        protected virtual void GenerateSpawner()
+        { 
+            var newSpawner = PhotonNetwork.Instantiate(_enemySpawner.gameObject.name, transform.position, Quaternion.identity);
+            _enemySpawner = newSpawner.GetComponent<MP_EnemySpawner>();
+        }
+    
         protected override IEnumerator SpawnEnemies(int enemySpawnQuantity)
         {
             if (PhotonNetwork.IsMasterClient)
