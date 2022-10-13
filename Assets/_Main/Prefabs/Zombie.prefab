@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1875103546855782359}
   - component: {fileID: 1875103546855782357}
   m_Layer: 0
-  m_Name: SP_GoblinPrefab
+  m_Name: Zombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -177,6 +177,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character_Goblin_Male
       objectReference: {fileID: 0}
+    - target: {fileID: 114438, guid: 2ef59bc5d753ebe4490b708befe65999, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 168536, guid: 2ef59bc5d753ebe4490b708befe65999, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 177106, guid: 2ef59bc5d753ebe4490b708befe65999, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 404400, guid: 2ef59bc5d753ebe4490b708befe65999, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -224,7 +236,7 @@ PrefabInstance:
     - target: {fileID: 9520566, guid: 2ef59bc5d753ebe4490b708befe65999, type: 3}
       propertyPath: m_Avatar
       value: 
-      objectReference: {fileID: 9000000, guid: 0b290d8d1057a64439e1f75af37ba68b, type: 2}
+      objectReference: {fileID: 9000000, guid: 272167f25e4e336479091def1f0ec8a9, type: 2}
     - target: {fileID: 9520566, guid: 2ef59bc5d753ebe4490b708befe65999, type: 3}
       propertyPath: m_Controller
       value: 
