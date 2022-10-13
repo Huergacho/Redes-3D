@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,12 @@ public class MP_CharacterController : SP_CharacterController
             Destroy(this); 
         }
         base.Awake();
+
+    }
+
+    protected void Start()
+    { 
+        PlayerSaver.Instance.SetInstance().AddNewPlayer((MP_CharacterModel)Model);
     }
 
     // Update is called once per frame

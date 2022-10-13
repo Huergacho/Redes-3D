@@ -36,7 +36,13 @@ public class MP_EnemyController : SP_EnemyController
     {
         int playerCount = PhotonNetwork.CountOfPlayers;
         int randomPlayerIndex = Random.Range(0, playerCount -1);
-        targetModel = MP_GameManager.MpInstance.characters[randomPlayerIndex];
+        var newPlayer = PlayerSaver.Instance.characters[randomPlayerIndex];
+        if (newPlayer != null)
+            targetModel = newPlayer;
+        else
+        {
+            print("NO TA PLAYER");
+        }
     }
 
 

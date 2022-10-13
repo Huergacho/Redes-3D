@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7340399194895847767}
-  - component: {fileID: 7340399194895847764}
   - component: {fileID: 7340399194895847765}
+  - component: {fileID: 7340399194739160468}
+  - component: {fileID: 7340399194739160469}
   m_Layer: 0
   m_Name: Instatiator
   m_TagString: Untagged
@@ -32,23 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7340399194895847764
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7340399194895847766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 168d6e005aac6fb4ea972e9fe547b866, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemySpawnQuantity: 4
-  _enemySpawner: {fileID: 0}
-  _character: {fileID: 4772656836320647661, guid: 810505a17efc1e14bb61ab5df458eafd, type: 3}
-  roundChangeCooldown: 4
-  spawn: {fileID: 0}
 --- !u!114 &7340399194895847765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,3 +55,39 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &7340399194739160468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7340399194895847766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ff8f9edab847188df47b2a83e656fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roundChangeCooldown: 3
+  _enemySpawner: {fileID: 2534380537714933954, guid: 833721248e5eeef4bab88e38bc2ad5f2, type: 3}
+  RoundCount: 0
+  ProvisionalEnemies: 3
+--- !u!114 &7340399194739160469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7340399194895847766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c13e393536343a096627272e97ef05e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefabs:
+  - {fileID: 4772656836320647639, guid: ee936f1c879521347848c712a62be145, type: 3}
+  - {fileID: 4772656836320647639, guid: 39a0aa987bf5ee44cbed3a9d8c4b8786, type: 3}
+  - {fileID: 4772656836320647639, guid: 810505a17efc1e14bb61ab5df458eafd, type: 3}
+  spawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
