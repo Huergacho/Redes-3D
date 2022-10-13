@@ -1,4 +1,4 @@
-using System;
+
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -14,7 +14,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public GameObject roomPanel;
     public TMP_Text roomName;
     public RoomItem roomItem;
-    private List<RoomItem> roomItemsList;
+    private List<RoomItem> _roomItemsList;
     public TMP_InputField roomInputField;
     public Transform contentObject;
 
@@ -22,7 +22,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     [SerializeField] private int maxPlayerNumber = 2;
     public float timeBetweenUpdates = 1.5f;
-    private float nextUpdateTime;
+    private float _nextUpdateTime;
 
 
     public GameObject playButton;
@@ -37,12 +37,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        roomItemsList = new List<RoomItem>();
+        _roomItemsList = new List<RoomItem>();
         playerItemsList = new List<PlayerItem>();
 
         roomPanel.SetActive(false);
         lobbyPanel.SetActive(true);
-        nextUpdateTime = 0f;
+        _nextUpdateTime = 0f;
 
         PhotonNetwork.JoinLobby();
     }
@@ -62,10 +62,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     #region Photon Overrides
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        if (Time.time >= nextUpdateTime)
+        if (Time.time >= _nextUpdateTime)
         {
             UpdateRoomList(roomList);
-            nextUpdateTime = Time.time + timeBetweenUpdates;
+            _nextUpdateTime = Time.time + timeBetweenUpdates;
         }
     }
     public override void OnJoinedRoom()
@@ -96,18 +96,18 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     void UpdateRoomList(List<RoomInfo> list)
     {
-        foreach (RoomItem item in roomItemsList)
+        foreach (RoomItem item in _roomItemsList)
         {
             Destroy(item.gameObject);
         }
 
-        roomItemsList.Clear();
+        _roomItemsList.Clear();
 
         foreach (RoomInfo room in list)
         {
             RoomItem newRoom = Instantiate(roomItem, contentObject);
             newRoom.SetRoomName(room.Name);
-            roomItemsList.Add(newRoom);
+            _roomItemsList.Add(newRoom);
         }
     }
 
