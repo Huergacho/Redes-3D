@@ -10,13 +10,8 @@ public class PlayerSaver : MonoBehaviourPun
     private void Awake()
     {
         Instance = this;
-    }
-
-    private void Start()
-    {
         GetPlayersInScene();
     }
-
     private void GetPlayersInScene()
     {
         foreach (var character in FindObjectsOfType<MP_CharacterModel>())

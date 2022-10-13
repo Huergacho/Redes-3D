@@ -1,8 +1,10 @@
-using System;
 using UnityEngine;
 using Photon.Pun;
-public class MP_EnemySpawner : SP_EnemySpawner
+
+public class MP_EnemySpawner : MonoBehaviourPun
 {
+    [SerializeField] private Transform[] enemySpawnPoints;
+    [SerializeField] private MP_EnemyModel enemy;
     private void Awake()
     {
         if (!PhotonNetwork.IsMasterClient)
@@ -11,9 +13,14 @@ public class MP_EnemySpawner : SP_EnemySpawner
         }
     }
 
-    public override void InstatiateEnemy()
+    private int GetRandomIndex()
     {
-        var newEnemy = MP_GenericPool.Instance.SpawnFromPool("Goblin", enemySpawnPoints[GetRandomIndex()].position,
-            Quaternion.identity);
+        var index = Random.Range(0, enemySpawnPoints.Length);
+        return index;
+    }
+
+    public void InstatiateEnemyMultiPlayer()
+    {
+        PhotonNetwork.Instantiate(enemy.gameObject.name, enemySpawnPoints[GetRandomIndex()].position, Quaternion.identity);
     }
 }

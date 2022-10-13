@@ -21,7 +21,7 @@ public class SP_GenericPool : MonoBehaviourPun
     {
         Instance = this;   
     }
-    private void Start()
+    protected virtual void Start()
     {
         PoolDictionary = new Dictionary<string, Queue<GameObject>>();
         foreach (Pool pool in poolsList)
@@ -77,6 +77,7 @@ public class SP_GenericPool : MonoBehaviourPun
 
     protected virtual GameObject InstancePoolObject(GameObject objectToSpawn, Transform desiredPos)
     {
+        print("TOY LLAMANDO A Single");
         return Instantiate(objectToSpawn, desiredPos);
     }
 }

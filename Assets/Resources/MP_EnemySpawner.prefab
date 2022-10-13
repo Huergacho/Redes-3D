@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 2534380537714933954}
   - component: {fileID: 2534380537714933952}
   m_Layer: 0
-  m_Name: EnemySpawner
+  m_Name: MP_EnemySpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -204,6 +204,7 @@ MonoBehaviour:
   - {fileID: 1093724557}
   - {fileID: 248748519}
   - {fileID: 926802746}
+  enemy: {fileID: 4748996930167278445, guid: 5bff7ece5b8a54ce98d91bd6351aa719, type: 3}
 --- !u!114 &2534380537714933952
 MonoBehaviour:
   m_ObjectHideFlags: 0

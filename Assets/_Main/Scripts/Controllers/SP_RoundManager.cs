@@ -8,12 +8,16 @@ public class SP_RoundManager : MonoBehaviourPun
         [SerializeField]protected float roundChangeCooldown;
         [SerializeField] protected SP_EnemySpawner _enemySpawner;
         [SerializeField]private int RoundCount;
-        [SerializeField] private int ProvisionalEnemies;
+        [SerializeField] protected int ProvisionalEnemies;
+
+        private void Awake()
+        {
+            GenerateSpawner();
+        }
 
         protected virtual void Start()
         {
             CallToSpawn();
-            GenerateSpawner();
         }
    
 

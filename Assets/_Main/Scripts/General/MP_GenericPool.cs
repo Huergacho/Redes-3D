@@ -1,35 +1,89 @@
 using Photon.Pun;
 using UnityEngine;
 using Photon.Realtime;
-    public class MP_GenericPool : SP_GenericPool
+using System.Collections.Generic;
+
+
+public class MP_GenericPool : MonoBehaviourPun
+{
+
+    [System.Serializable]
+    public class Pool
     {
-        protected override void Awake()
+        [SerializeField] public string tag;
+        [SerializeField] public int poolSize;
+        [SerializeField] public GameObject objectToPool;
+        [SerializeField] public GameObject objectFather;
+    }
+
+    public List<Pool> poolsList;
+    public Dictionary<string, Queue<GameObject>> PoolDictionary;
+    public static MP_GenericPool Instance;
+    protected virtual void Awake()
+    {
+        Instance = this;
+    }
+
+    protected virtual void Start()
+    {
+        PoolDictionary = new Dictionary<string, Queue<GameObject>>();
+        foreach (Pool pool in poolsList)
         {
-            if(!PhotonNetwork.IsMasterClient)
+            Queue<GameObject> objectPool = new Queue<GameObject>();
+            for (int i = 0; i < pool.poolSize; i++)
             {
-                photonView.RPC(nameof(GetInstance),photonView.Owner,PhotonNetwork.MasterClient);
+                GameObject obj = InstancePoolObject(pool.objectToPool, transform);
+                if (pool.objectFather != null)
+                {
+                    obj.transform.parent = pool.objectFather.transform;
+                }
+
+                print("Se instancia");
+                obj.SetActive(false);
+                objectPool.Enqueue(obj);
             }
-            else
-            {
-                SetInstance();
-            }
 
-        }
-
-        [PunRPC]
-        public void GetInstance(Player client)
-        {
-            photonView.RPC(nameof(SetInstance),client);
-        }
-
-        [PunRPC]
-        public void SetInstance()
-        {
-            Instance = this;
-        }
-
-        protected override GameObject InstancePoolObject(GameObject objectToSpawn, Transform desiredPos)
-        {
-            return PhotonNetwork.Instantiate(objectToSpawn.name, desiredPos.position,Quaternion.identity);
+            PoolDictionary.Add(pool.tag, objectPool);
         }
     }
+
+    public GameObject SpawnFromPool(string tag, Vector3 posToSpawn, Quaternion rotation)
+    {
+        if (!PoolDictionary.ContainsKey(tag)) // Chequeo de si la key existe
+        {
+            Debug.LogWarning("no existe pool con" + tag);
+            return null;
+        }
+
+        GameObject objectToSpawn = PoolDictionary[tag].Dequeue();
+        if (!objectToSpawn.activeSelf)
+        {
+            objectToSpawn.SetActive(true);
+            objectToSpawn.transform.position = posToSpawn;
+            objectToSpawn.transform.rotation = rotation;
+        }
+        else
+        {
+            var newObject = InstancePoolObject(objectToSpawn, objectToSpawn.transform.parent);
+            PoolDictionary[tag].Enqueue(objectToSpawn);
+            objectToSpawn = newObject;
+        }
+
+
+
+        IPooleable pooledObj = objectToSpawn.GetComponent<IPooleable>();
+        if (pooledObj != null)
+        {
+            pooledObj.OnObjectSpawn();
+        }
+
+        PoolDictionary[tag].Enqueue(objectToSpawn);
+        return objectToSpawn;
+    }
+
+    protected GameObject InstancePoolObject(GameObject objectToSpawn, Transform desiredPos)
+    {
+        print("TOY LLAMANDO A MULTI");
+        return PhotonNetwork.Instantiate(objectToSpawn.name, desiredPos.position, Quaternion.identity);
+    }
+}

@@ -1,52 +1,58 @@
 
+using System;
 using System.Collections;
 using Photon.Pun;
 using UnityEngine;
 
-public class MP_RoundManager : SP_RoundManager
+public class MP_RoundManager : MonoBehaviourPun
+{
+    [SerializeField]protected float roundChangeCooldown;
+    [SerializeField]private int RoundCount;
+    [SerializeField] protected int ProvisionalEnemies;
+    [SerializeField] private MP_EnemySpawner mpEnemySpawnerPrefab;
+    private MP_EnemySpawner _mpEnemySpawner;
+    
+    private void Awake()
     {
-        protected override void Start()
+        GenerateSpawner();
+    }
+
+    private void Start()
+    {
+        CallToSpawn();
+    }
+
+    private void GenerateSpawner()
+    {
+        var spawner = PhotonNetwork.Instantiate(mpEnemySpawnerPrefab.gameObject.name, Vector3.zero, Quaternion.identity);
+        _mpEnemySpawner = spawner.GetComponent<MP_EnemySpawner>();
+    }
+
+    private void CallToSpawn()
+    {
+        if (PhotonNetwork.IsMasterClient)
         {
-            if (PhotonNetwork.IsMasterClient)
+           StartCoroutine(SpawnEnemies(ProvisionalEnemies));
+        }
+    } 
+    protected virtual void AddRound()
+    {
+        RoundCount++;
+    }
+
+
+    private IEnumerator SpawnEnemies(int enemySpawnQuantity)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            AddRound();
+            yield return new WaitForSeconds(roundChangeCooldown);
+            for (int i = 0; i < enemySpawnQuantity; i++)
             {
-                base.Start();
-            }
-            else
-            {
-                Destroy(this);
+                _mpEnemySpawner.InstatiateEnemyMultiPlayer();
+                yield return new WaitForSeconds(3f);
             }
         }
 
-        [PunRPC]
-        protected override void CallToSpawn()
-        {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                base.CallToSpawn();
-            }
-            else
-            {
-               photonView.RPC(nameof(CallToSpawn),PhotonNetwork.MasterClient); 
-            }
-        }
-        protected virtual void GenerateSpawner()
-        { 
-            var newSpawner = PhotonNetwork.Instantiate(_enemySpawner.gameObject.name, transform.position, Quaternion.identity);
-            _enemySpawner = newSpawner.GetComponent<MP_EnemySpawner>();
-        }
-    
-        protected override IEnumerator SpawnEnemies(int enemySpawnQuantity)
-        {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                base.AddRound();
-                yield return new WaitForSeconds(roundChangeCooldown);
-                for (int i = 0; i < enemySpawnQuantity; i++)
-                {
-                    _enemySpawner.InstatiateEnemy();
-                    yield return new WaitForSeconds(3f);
-                }
-            }
- 
-        }
+    }
     }

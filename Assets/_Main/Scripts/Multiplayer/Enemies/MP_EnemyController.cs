@@ -11,6 +11,10 @@ public class MP_EnemyController : SP_EnemyController
 
     private void Awake()
     {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            Destroy(gameObject);
+        }
         _mpLifeController = GetComponent<MP_LifeController>();
         _mpLifeController.AssignLife(_enemyStats.maxLife);
         _enemyModel = GetComponent<MP_EnemyModel>();
