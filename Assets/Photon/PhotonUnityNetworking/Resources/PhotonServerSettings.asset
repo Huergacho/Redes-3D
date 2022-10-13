@@ -52,6 +52,8 @@ MonoBehaviour:
   - AddNewCharacter
   - InstanceCharacter
   - GetInstance
+  - AddNewPlayer
+  - SetInstance
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
