@@ -259,6 +259,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseStats: {fileID: 11400000, guid: 1ff087fa7759c4d4b8bddcd710e18bb9, type: 2}
   currentPoints: 0
+  Model: {fileID: 3146871593758041945}
 --- !u!114 &9123828720747852208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,4 +274,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   identificatorPrefab: {fileID: 513404939609549835, guid: e8e57c48a18528d49ae1688166e5c6e6, type: 3}
   spPointCounter: {fileID: 7158761085645734865, guid: c144afbc64601406d9b52dddd8601612, type: 3}
-  mp_PointCounterPrefab: {fileID: 3371779615361402478, guid: 0c7543c528f08443a8a54d2459cced78, type: 3}

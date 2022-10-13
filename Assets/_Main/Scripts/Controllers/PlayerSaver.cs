@@ -9,34 +9,20 @@ public class PlayerSaver : MonoBehaviourPun
     public static PlayerSaver Instance;
     private void Awake()
     {
-        if(!PhotonNetwork.IsMasterClient)
+        Instance = this;
+    }
+
+    private void Start()
+    {
+        GetPlayersInScene();
+    }
+
+    private void GetPlayersInScene()
+    {
+        foreach (var character in FindObjectsOfType<MP_CharacterModel>())
         {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = SetInstance();
+            characters.Add(character);
         }
         
-    }
-
-    [PunRPC]
-    public void GetInstance(Player client)
-    {
-        photonView.RPC(nameof(SetInstance),client);
-    }
-
-    [PunRPC]
-    public PlayerSaver SetInstance()
-    {
-        if(Instance == null)
-            Instance = this;
-        return Instance;
-    }
-
-    [PunRPC]
-    public void AddNewPlayer(MP_CharacterModel data)
-    {
-        characters.Add(data);
     }
 }
