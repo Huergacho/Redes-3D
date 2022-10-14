@@ -1,17 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using Photon.Pun;
-using Photon.Realtime;
+
 [RequireComponent(typeof(MP_CharacterModel),typeof(MP_Weapon),typeof(MP_LifeController))]
 public class MP_CharacterController : SP_CharacterController
 {
-    protected override void Awake()
-    {
-        base.Awake();
-    }
-    
     // Update is called once per frame
     protected override void Update()
     {
@@ -26,7 +19,7 @@ public class MP_CharacterController : SP_CharacterController
         // gameObject.SetActive(false);
         
        // PhotonNetwork.LocalPlayer;
-       photonView.RPC(nameof(PlayerDieRPC),RpcTarget.All,this);
+       photonView.RPC(nameof(PlayerDieRPC),RpcTarget.All,gameObject);
     }
 
     public override void AddPoints()
@@ -37,10 +30,13 @@ public class MP_CharacterController : SP_CharacterController
         }
     }
 
+
+
     [PunRPC]
     void PlayerDieRPC(GameObject me)
     {
-       me.SetActive(false);
+       // photonView.enable = false;
+        me.SetActive(false);
     }
     
 }

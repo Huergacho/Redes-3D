@@ -204,7 +204,7 @@ MonoBehaviour:
   - {fileID: 1093724557}
   - {fileID: 248748519}
   - {fileID: 926802746}
-  enemy: {fileID: 4748996930167278445, guid: 5bff7ece5b8a54ce98d91bd6351aa719, type: 3}
+  enemy: {fileID: 2906910859267170168, guid: 84f8e9a4e73d03c42a299f3dcccee1f2, type: 3}
 --- !u!114 &2534380537714933952
 MonoBehaviour:
   m_ObjectHideFlags: 0

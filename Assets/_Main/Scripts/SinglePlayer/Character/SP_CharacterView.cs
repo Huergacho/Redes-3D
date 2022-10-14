@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
-using UnityEngine.Serialization;
+
 
 public class SP_CharacterView : MonoBehaviourPun
 {

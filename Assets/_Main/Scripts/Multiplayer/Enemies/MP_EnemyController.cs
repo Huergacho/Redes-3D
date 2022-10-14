@@ -35,12 +35,12 @@ public class MP_EnemyController : SP_EnemyController
     }
     private void GetPlayersInScene()
     {
-        List<MP_CharacterModel> players = new List<MP_CharacterModel>();
-        foreach (var posPayer in FindObjectsOfType<MP_CharacterModel>())
+        List<SP_CharacterModel> players = new List<SP_CharacterModel>();
+        foreach (var posPayer in FindObjectsOfType<MP_CharacterController>())
         {
             if (posPayer.isActiveAndEnabled)
             {
-                players.Add(posPayer);
+                players.Add(posPayer.GetModel());
             }
         }
 
@@ -62,7 +62,7 @@ public class MP_EnemyController : SP_EnemyController
 
     protected override void Update()
     {
-        if (!targetModel.photonView.isActiveAndEnabled) {GetPlayersInScene();}
+        if (!targetModel.enabled) {GetPlayersInScene();}
         _fsm.UpdateState();
     }
 

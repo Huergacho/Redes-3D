@@ -60,6 +60,10 @@ public class SP_CharacterController : MonoBehaviourPun
         return _spLifeController.IsAlive();
     }
 
+    public virtual SP_CharacterModel GetModel()
+    {
+        return model;
+    }
     public virtual void AddPoints()
     {
         currentPoints++;
