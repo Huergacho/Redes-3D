@@ -44,7 +44,7 @@ public class SP_CharacterController : MonoBehaviourPun
 
     void Shoot()
     {
-        if (Input.GetKey(KeyCode.P))
+        if (Input.GetMouseButton(0))
         {
             _spWeapon.Shoot();
         }
