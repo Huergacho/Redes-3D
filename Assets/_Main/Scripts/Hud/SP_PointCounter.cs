@@ -20,11 +20,10 @@ public class SP_PointCounter : MonoBehaviourPun
 
         protected virtual void Start()
         {
-            AssignPlayer();
-            Initialize();
+            //Initialize();
         }
 
-        protected void Initialize()
+        public void Initialize()
         {
             _character.OnAddPoints += UpdatePoints;
             UpdatePoints(0);  
@@ -32,17 +31,6 @@ public class SP_PointCounter : MonoBehaviourPun
         public void SetTarget(MP_CharacterController controller)
         {
             _character = controller;
-        }
-        private void AssignPlayer()
-        {
-            if (SP_GameManager.SPInstance != null)
-            {
-                _character = SP_GameManager.SPInstance.Character.GetComponent<SP_CharacterController>();
-            }
-            else
-            {
-                print("fiumba");
-            }
         }
         public void SetColor(Color color)
         {

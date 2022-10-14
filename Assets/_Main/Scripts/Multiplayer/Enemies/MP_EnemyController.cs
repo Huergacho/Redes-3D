@@ -28,7 +28,6 @@ public class MP_EnemyController : SP_EnemyController
         _enemyModel.Subscribe(this);
         _enemyView.Subscribe(this);
         _mpLifeController.OnDie += OnDieCommand;
-        _mpLifeController.OnTakeHit += targetModel.GetComponent<MP_CharacterController>().AddPoints;
         InitDecisionTree();
         InitFsm();
     }

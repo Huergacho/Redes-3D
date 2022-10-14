@@ -1,9 +1,14 @@
+using System;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 public class MP_CharacterView : SP_CharacterView
 {
     private Identificator _identificator;
+
+    private MP_PointCounter _pointCounter;
+
+    [SerializeField]private MP_PointCounter _pointCounterMpPrefab;
     // private MP_PointCounter _pointCounter;
     // private MP_PointCounter mp_PointCounterPrefab;
 
@@ -13,17 +18,19 @@ public class MP_CharacterView : SP_CharacterView
        var canvas = GameObject.Find("Canvas");
        _identificator = GameObject.Instantiate<Identificator>(identificatorPrefab, canvas.transform);
         _identificator.SetTarget(transform);
-        // _pointCounter = GameObject.Instantiate<MP_PointCounter>(mp_PointCounterPrefab, canvas.transform);
-        // _pointCounter.SetTarget(this.GetComponent<MP_CharacterController>());
+
         if (photonView.IsMine)
         {
             SetColor();
             // SetPointColor();
+            _pointCounter = Instantiate(_pointCounterMpPrefab, canvas.transform);
+            _pointCounter.SetTarget(gameObject.GetComponent<MP_CharacterController>());
+            _pointCounter.SetColor(_identificator.GetColor());
+            _pointCounter.Initialize();
         }
         else
         {
             photonView.RPC("RequestColor",photonView.Owner,PhotonNetwork.LocalPlayer);
-            // photonView.RPC("RequestPointColor",photonView.Owner,PhotonNetwork.LocalPlayer);
         }
     }
 

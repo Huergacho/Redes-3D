@@ -5,7 +5,7 @@ public class SP_LifeController : MonoBehaviourPun
 {
     private float _currentLife;
     public event Action OnDie;
-    public event Action OnTakeHit;
+    // public event Action OnTakeHit;
     public void AssignLife(float data)
     {
         _currentLife = data;
@@ -16,7 +16,7 @@ public class SP_LifeController : MonoBehaviourPun
         {
             Die();
         }
-        TakeHit();
+        // TakeHit();
         _currentLife -= damage;
         }
 
@@ -29,8 +29,8 @@ public class SP_LifeController : MonoBehaviourPun
         OnDie?.Invoke();
     }
 
-    protected virtual void TakeHit()
-    {
-        OnTakeHit?.Invoke();
-    }
+    // protected virtual void TakeHit()
+    // {
+    //     OnTakeHit?.Invoke();
+    // }
 }

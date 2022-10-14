@@ -5,7 +5,7 @@ public class SP_Bullet : MonoBehaviourPun
     [SerializeField] private float bulletSpeed;
     [SerializeField] private float lifeTime;
     public int damage;
-
+    public MP_CharacterController owner;
 
     protected virtual void Update()
     {
@@ -46,6 +46,7 @@ public class SP_Bullet : MonoBehaviourPun
         if (life != null)
         {
             life.TakeDamage(damage);
+            owner.AddPoints();
         }
     }
 
