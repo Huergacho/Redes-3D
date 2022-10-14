@@ -7,7 +7,7 @@ public class UpgradeBox : MonoBehaviour
 {
     [SerializeField] private LayerMask playerLayer;
     //NO ME TOMA LA COLISION
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         if ((playerLayer & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer)
         {
