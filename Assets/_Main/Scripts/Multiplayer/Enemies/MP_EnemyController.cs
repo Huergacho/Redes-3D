@@ -1,6 +1,7 @@
 using Photon.Pun;
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(MP_LifeController))]
@@ -34,10 +35,19 @@ public class MP_EnemyController : SP_EnemyController
     }
     private void GetPlayersInScene()
     {
-    
-        MP_CharacterModel[] players = FindObjectsOfType<MP_CharacterModel>();
-        int index = Random.Range(0, players.Length);
+        List<MP_CharacterModel> players = new List<MP_CharacterModel>();
+        foreach (var posPayer in FindObjectsOfType<MP_CharacterModel>())
+        {
+            if (posPayer.isActiveAndEnabled)
+            {
+                players.Add(posPayer);
+            }
+        }
+
+        //MP_CharacterModel[] players = new MP_CharacterModel[];
+        int index = Random.Range(0, players.Count-1);
         targetModel = players[index];
+        if (!targetModel) this.enabled = false;
     }
     private void OnDieCommand()
     {
@@ -50,6 +60,13 @@ public class MP_EnemyController : SP_EnemyController
         _mpLifeController.AssignLife(_enemyStats.maxLife);
     }
 
+    protected override void Update()
+    {
+        if (!targetModel.gameObject.activeSelf) {GetPlayersInScene();}
+        _fsm.UpdateState();
+    }
+
+  
     [PunRPC]
     public void AssingPlayerRPC(MP_CharacterModel target)
     {

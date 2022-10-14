@@ -23,7 +23,7 @@ public class MP_CharacterController : SP_CharacterController
 
     protected override void Die()
     {
-        PhotonNetwork.Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     public override void AddPoints()

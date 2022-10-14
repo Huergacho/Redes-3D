@@ -26,7 +26,6 @@ public class SP_CharacterController : MonoBehaviourPun
 
     }
 
-    // Update is called once per frame
     protected virtual void Update()
     {   
             MoveCommand();

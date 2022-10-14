@@ -23,7 +23,7 @@ public class SP_EnemyController : MonoBehaviourPun, IPooleable
     public ObstacleAvoidance Behaviour { get; private set; }
     
     private bool _waitForIdleState;
-    private FSM<EnemyStatesConstants> _fsm;
+    protected FSM<EnemyStatesConstants> _fsm;
     private INode _root;
     private bool _previousInSightState;
     private bool _currentInSightState;
@@ -34,10 +34,9 @@ public class SP_EnemyController : MonoBehaviourPun, IPooleable
     public event Action<Vector3> OnMove;
     public event Action<Vector3> OnLookAt;
     public event Action OnIdle;
-    public event Action OnAttack;
+    public event Action<SP_LifeController> OnAttack;
 
     #endregion
-
    
     protected  virtual void Awake()
     {
@@ -134,7 +133,7 @@ public class SP_EnemyController : MonoBehaviourPun, IPooleable
    
     }
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         if (!targetModel.GetLife().IsAlive()) return;
         _fsm.UpdateState();
@@ -159,12 +158,12 @@ public class SP_EnemyController : MonoBehaviourPun, IPooleable
 
     private void OnAttackCommand()
     {
-        OnAttack?.Invoke();
+        OnAttack?.Invoke(targetModel.GetLife());
     }
 
     private void OnDieCommand()
     {
-        gameObject.SetActive(false);
+        PhotonNetwork.Destroy(gameObject);
     }
 
     public virtual void AssignTarget()

@@ -17,7 +17,6 @@ public class SP_EnemyModel : MonoBehaviourPun
         {
             photonView.RPC(nameof(UpdateForward),photonView.Owner,PhotonNetwork.LocalPlayer);        
         }
-    
     }
 
     public void Subscribe(SP_EnemyController controller)
@@ -37,7 +36,6 @@ public class SP_EnemyModel : MonoBehaviourPun
     {
         var dirNorm = dir.normalized;
         _rb.velocity = dirNorm * data.speed;
- 
     }
 
     private void LookAt(Vector3 dir)
@@ -47,13 +45,14 @@ public class SP_EnemyModel : MonoBehaviourPun
         _transform.forward = normDir;
     }
 
-    private void Attack()
+    private void Attack(SP_LifeController target)
     {
-        Debug.Log("Pew pew");
-    }
-
-    private void Die()
-    {
+        if(!CanHit(target.gameObject.transform.position)) return;
+        var life = GetTargetLifeComponent(target.gameObject);
+        if (life != null)
+        {
+            life.TakeDamage(data.damage);
+        }
     }
 
     public void AssignStats(EnemySO stats)
@@ -61,6 +60,11 @@ public class SP_EnemyModel : MonoBehaviourPun
         data = stats;
     }
 
+    private bool CanHit(Vector3 target)
+    {
+        return Vector3.Magnitude(transform.position - target) < data.distanceToAttack;
+    }
+    
     [PunRPC]
     public void LookAtRPC(Vector3 dir)
     {
@@ -71,5 +75,9 @@ public class SP_EnemyModel : MonoBehaviourPun
     public void UpdateForward(Player player)
     {
         photonView.RPC(nameof(LookAtRPC),player,_transform.forward);
+    }
+    protected virtual SP_LifeController GetTargetLifeComponent(GameObject target)
+    {
+        return target.GetComponent<SP_LifeController>();
     }
 }

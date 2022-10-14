@@ -17,7 +17,7 @@ public class MP_EnemyView : MonoBehaviourPun
         controller.OnAttack += Attack;
     }
     
-    private void Attack()
+    private void Attack(SP_LifeController blah)
     {
         _animator.SetFloat("Speed",0f);
     }
