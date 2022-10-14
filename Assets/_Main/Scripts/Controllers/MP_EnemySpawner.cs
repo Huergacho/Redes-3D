@@ -21,6 +21,9 @@ public class MP_EnemySpawner : MonoBehaviourPun
 
     public void InstatiateEnemyMultiPlayer()
     {
-        PhotonNetwork.Instantiate(enemy.gameObject.name, enemySpawnPoints[GetRandomIndex()].position, Quaternion.identity);
+        GameObject newEnemy = PhotonNetwork.Instantiate(enemy.gameObject.name, enemySpawnPoints[GetRandomIndex()].position, Quaternion.identity);
+        //var controller = newEnemy.GetComponent<MP_EnemyController>();
+       // controller.AssignTargetFromOutside(PlayerSaver.Instance.characters[Random.Range(0,PlayerSaver.Instance.characters.Count -1)]);
+       // photonView.RPC(nameof(controller.AssignTarget),photonView.Owner,PlayerSaver.Instance.characters[Random.Range(0,PlayerSaver.Instance.characters.Count -1)]);
     }
 }

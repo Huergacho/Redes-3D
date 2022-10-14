@@ -10,14 +10,20 @@ public class PlayerSaver : MonoBehaviourPun
     private void Awake()
     {
         Instance = this;
-        GetPlayersInScene();
     }
-    private void GetPlayersInScene()
-    {
-        foreach (var character in FindObjectsOfType<MP_CharacterModel>())
-        {
-            characters.Add(character);
-        }
-        
-    }
+
+    // private void Start()
+    // {
+    //     foreach (var player in PhotonNetwork.PlayerList)
+    //     {
+    //         GetPlayersInScene();
+    //     }
+    // }
+    //
+    // private void GetPlayersInScene()
+    // {
+    //
+    //     MP_CharacterModel player = FindObjectOfType<MP_CharacterModel>();
+    //     characters.Add(player);
+    // }
 }

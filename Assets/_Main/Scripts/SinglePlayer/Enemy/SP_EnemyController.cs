@@ -166,7 +166,7 @@ public class SP_EnemyController : MonoBehaviourPun, IPooleable
         gameObject.SetActive(false);
     }
 
-    protected virtual void AssignTarget()
+    public virtual void AssignTarget()
     {
         targetModel = SP_GameManager.SPInstance.Character;
     }

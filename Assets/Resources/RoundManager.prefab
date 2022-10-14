@@ -45,9 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roundChangeCooldown: 3
-  _enemySpawner: {fileID: 2534380537714933954, guid: 833721248e5eeef4bab88e38bc2ad5f2, type: 3}
   RoundCount: 0
-  ProvisionalEnemies: 3
+  ProvisionalEnemies: 10
   mpEnemySpawnerPrefab: {fileID: 2534380537714933954, guid: 833721248e5eeef4bab88e38bc2ad5f2, type: 3}
 --- !u!114 &305882798303352897
 MonoBehaviour:

@@ -11,10 +11,7 @@ public class MP_EnemyController : SP_EnemyController
 
     private void Awake()
     {
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            Destroy(gameObject);
-        }
+        GetPlayersInScene();
         _mpLifeController = GetComponent<MP_LifeController>();
         _mpLifeController.AssignLife(_enemyStats.maxLife);
         _enemyModel = GetComponent<MP_EnemyModel>();
@@ -23,7 +20,6 @@ public class MP_EnemyController : SP_EnemyController
 
     protected override void Start()
     {
-        AssignTarget();
         if (targetModel != null)
         {
             InitializeOBS();
@@ -35,29 +31,27 @@ public class MP_EnemyController : SP_EnemyController
         InitDecisionTree();
         InitFsm();
     }
-
-    protected override void AssignTarget()
+    private void GetPlayersInScene()
     {
-        int playerCount = PhotonNetwork.CountOfPlayers;
-        int randomPlayerIndex = Random.Range(0, playerCount -1);
-        var newPlayer = PlayerSaver.Instance.characters[randomPlayerIndex];
-        if (newPlayer != null)
-            targetModel = newPlayer;
-        else
-        {
-            print("NO TA PLAYER");
-        }
+    
+        MP_CharacterModel[] players = FindObjectsOfType<MP_CharacterModel>();
+        int index = Random.Range(0, players.Length);
+        targetModel = players[index];
     }
-
-
     private void OnDieCommand()
     {
         // Ver si disparamos por model o view por animación
-        gameObject.SetActive(false);
+        PhotonNetwork.Destroy(gameObject);
     }
 
     public override void OnObjectSpawn()
     {
         _mpLifeController.AssignLife(_enemyStats.maxLife);
+    }
+
+    [PunRPC]
+    public void AssingPlayerRPC(MP_CharacterModel target)
+    {
+        target = (MP_CharacterModel)targetModel;
     }
 }

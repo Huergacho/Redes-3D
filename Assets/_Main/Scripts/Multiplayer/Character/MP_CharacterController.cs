@@ -10,7 +10,6 @@ public class MP_CharacterController : SP_CharacterController
     protected override void Awake()
     {
         base.Awake();
-
     }
 
     protected void Start()
