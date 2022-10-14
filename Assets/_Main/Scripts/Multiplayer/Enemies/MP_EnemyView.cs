@@ -1,11 +1,13 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
-public class MP_EnemyView : MonoBehaviour
+public class MP_EnemyView : MonoBehaviourPun
 {
     private Animator _animator;
 
     private void Awake()
     {
+        if(!photonView.IsMine) Destroy(this);
         _animator = GetComponentInChildren<Animator>();
     }
 
