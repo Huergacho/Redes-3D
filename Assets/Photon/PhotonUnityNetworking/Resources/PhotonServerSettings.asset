@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-    AppIdRealtime: 88333094-d796-4415-a165-4b4628661a40
+    AppIdRealtime: cd2c557a-243d-41bc-b364-8166952f8bd0
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
@@ -28,42 +28,23 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  DevRegion: sa
+  DevRegion: 
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
+  - AssingPlayerRPC
   - ClickRpc
   - DestroyRpc
   - DestroySpaceship
   - Fire
-  - RespawnSpaceship
-  - RequestLifeController
+  - LookAtRPC
   - RequestColor
+  - RespawnSpaceship
   - SetColor
   - TakeDamage
-  - CountRounds
-  - AddRound
-  - RequestPointColor
-  - SetPointColor
-  - UpdatePoints
-  - InstatiateEnemy
-  - AddNewCharacter
-  - InstanceCharacter
-  - GetInstance
-  - AddNewPlayer
-  - SetInstance
-  - CallToSpawn
-  - ExternalAddPlayer
-  - GetMasterInstance
-  - AssingPlayerRPC
-<<<<<<< Updated upstream
-  - TakeHit
-=======
-  - LookAtRPC
   - UpdateForward
->>>>>>> Stashed changes
   DisableAutoOpenWizard: 1
   ShowSettings: 0
-  DevRegionSetOnce: 1
+  DevRegionSetOnce: 0
