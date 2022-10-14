@@ -62,7 +62,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     #region Photon Overrides
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        if (Time.time >= _nextUpdateTime)
+        if (Time.time > _nextUpdateTime)
         {
             UpdateRoomList(roomList);
             _nextUpdateTime = Time.time + timeBetweenUpdates;

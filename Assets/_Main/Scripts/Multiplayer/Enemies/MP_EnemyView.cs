@@ -15,6 +15,7 @@ public class MP_EnemyView : MonoBehaviourPun
     {
         controller.OnMove += Walk;
         controller.OnAttack += Attack;
+        controller.OnDie += Die;
     }
     
     private void Attack(SP_LifeController blah)
@@ -24,5 +25,10 @@ public class MP_EnemyView : MonoBehaviourPun
     private void Walk(Vector3 a)
     {
         _animator.SetFloat("Speed",1f);
+    }
+
+    private void Die()
+    {
+        _animator.SetFloat("Speed",-1f);
     }
 }

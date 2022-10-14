@@ -62,14 +62,14 @@ public class MP_EnemyController : SP_EnemyController
 
     protected override void Update()
     {
-        if (!targetModel.gameObject.activeSelf) {GetPlayersInScene();}
+        if (!targetModel.photonView.isActiveAndEnabled) {GetPlayersInScene();}
         _fsm.UpdateState();
     }
 
   
-    [PunRPC]
-    public void AssingPlayerRPC(MP_CharacterModel target)
-    {
-        target = (MP_CharacterModel)targetModel;
-    }
+    // [PunRPC]
+    // public void AssingPlayerRPC(MP_CharacterModel target)
+    // {
+    //     target = (MP_CharacterModel)targetModel;
+    // }
 }

@@ -23,7 +23,10 @@ public class MP_CharacterController : SP_CharacterController
 
     protected override void Die()
     {
-        gameObject.SetActive(false);
+        // gameObject.SetActive(false);
+        
+       // PhotonNetwork.LocalPlayer;
+       photonView.RPC(nameof(PlayerDieRPC),RpcTarget.All,this);
     }
 
     public override void AddPoints()
@@ -33,4 +36,11 @@ public class MP_CharacterController : SP_CharacterController
             base.AddPoints();
         }
     }
+
+    [PunRPC]
+    void PlayerDieRPC(GameObject me)
+    {
+       me.SetActive(false);
+    }
+    
 }

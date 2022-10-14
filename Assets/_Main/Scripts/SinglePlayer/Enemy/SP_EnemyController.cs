@@ -35,6 +35,7 @@ public class SP_EnemyController : MonoBehaviourPun, IPooleable
     public event Action<Vector3> OnLookAt;
     public event Action OnIdle;
     public event Action<SP_LifeController> OnAttack;
+    public event Action OnDie; 
 
     #endregion
    
@@ -141,6 +142,7 @@ public class SP_EnemyController : MonoBehaviourPun, IPooleable
     }
     #region Commands
 
+    
     private void OnMoveCommand(Vector3 moveDir)
     {
         OnMove?.Invoke(moveDir);
@@ -163,6 +165,7 @@ public class SP_EnemyController : MonoBehaviourPun, IPooleable
 
     private void OnDieCommand()
     {
+        OnDie?.Invoke();
         PhotonNetwork.Destroy(gameObject);
     }
 
