@@ -6,11 +6,21 @@ public class MP_EnemyView : MonoBehaviour
 
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
+        _animator = GetComponentInChildren<Animator>();
     }
 
     public void Subscribe(MP_EnemyController controller)
     {
-        // eventos del controlador
+        controller.OnMove += Walk;
+        controller.OnAttack += Attack;
+    }
+    
+    private void Attack()
+    {
+        _animator.SetFloat("Speed",0f);
+    }
+    private void Walk(Vector3 a)
+    {
+        _animator.SetFloat("Speed",1f);
     }
 }

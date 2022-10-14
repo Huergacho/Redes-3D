@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 public class MP_EnemyController : SP_EnemyController
 {
     private MP_LifeController _mpLifeController;
-
+    private MP_EnemyView _enemyView;
 
     private void Awake()
     {
@@ -15,7 +15,7 @@ public class MP_EnemyController : SP_EnemyController
         _mpLifeController = GetComponent<MP_LifeController>();
         _mpLifeController.AssignLife(_enemyStats.maxLife);
         _enemyModel = GetComponent<MP_EnemyModel>();
-
+        _enemyView = GetComponent<MP_EnemyView>();
     }
 
     protected override void Start()
@@ -26,6 +26,7 @@ public class MP_EnemyController : SP_EnemyController
         }
         _enemyModel.AssignStats(_enemyStats);
         _enemyModel.Subscribe(this);
+        _enemyView.Subscribe(this);
         _mpLifeController.OnDie += OnDieCommand;
         _mpLifeController.OnTakeHit += targetModel.GetComponent<MP_CharacterController>().AddPoints;
         InitDecisionTree();
