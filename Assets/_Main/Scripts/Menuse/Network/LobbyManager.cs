@@ -20,7 +20,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     #endregion
 
-    [SerializeField] private int maxPlayerNumber = 2;
+    [SerializeField] private int maxPlayerNumber = 4;
     public float timeBetweenUpdates = 1.5f;
     private float _nextUpdateTime;
 

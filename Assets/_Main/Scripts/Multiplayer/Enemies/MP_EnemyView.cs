@@ -21,14 +21,26 @@ public class MP_EnemyView : MonoBehaviourPun
     private void Attack(SP_LifeController blah)
     {
         _animator.SetFloat("Speed",0f);
+        photonView.RPC(nameof(UpdateSpeed), RpcTarget.Others, 0f);
     }
     private void Walk(Vector3 a)
     {
         _animator.SetFloat("Speed",1f);
+        photonView.RPC(nameof(UpdateSpeed), RpcTarget.Others, 1f);
     }
 
     private void Die()
     {
-        _animator.SetFloat("Speed",-1f);
+        _animator.SetFloat("Speed", -1f);
+        photonView.RPC(nameof(UpdateSpeed), RpcTarget.Others, -1f);
     }
+
+
+
+    [PunRPC]
+    public void UpdateSpeed(float update)
+    {
+        _animator.SetFloat("Speed", update);
+    }
+    
 }
