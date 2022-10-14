@@ -11,19 +11,7 @@ public class MP_CharacterController : SP_CharacterController
     {
         base.Awake();
     }
-
-    protected void Start()
-    {
-        // if (PhotonNetwork.IsMasterClient)
-        // {
-        //     PlayerSaver.Instance.AddNewPlayer((MP_CharacterModel)Model);
-        // }
-        // else
-        // {
-        //     photonView.RPC(nameof(PlayerSaver.Instance.ExternalAddPlayer),PhotonNetwork.MasterClient,(MP_CharacterModel)Model);
-        // }
-    }
-
+    
     // Update is called once per frame
     protected override void Update()
     {

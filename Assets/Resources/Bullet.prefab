@@ -115,6 +115,7 @@ MonoBehaviour:
   bulletSpeed: 5
   lifeTime: 5
   damage: 3
+  owner: {fileID: 0}
 --- !u!114 &-15451934035114164
 MonoBehaviour:
   m_ObjectHideFlags: 0
