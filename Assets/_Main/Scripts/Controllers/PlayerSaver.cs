@@ -11,19 +11,4 @@ public class PlayerSaver : MonoBehaviourPun
     {
         Instance = this;
     }
-
-    // private void Start()
-    // {
-    //     foreach (var player in PhotonNetwork.PlayerList)
-    //     {
-    //         GetPlayersInScene();
-    //     }
-    // }
-    //
-    // private void GetPlayersInScene()
-    // {
-    //
-    //     MP_CharacterModel player = FindObjectOfType<MP_CharacterModel>();
-    //     characters.Add(player);
-    // }
 }

@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
+
 public class MP_CharacterView : SP_CharacterView
 {
     private Identificator _identificator;
@@ -9,42 +11,34 @@ public class MP_CharacterView : SP_CharacterView
     private MP_PointCounter _pointCounter;
 
     [SerializeField]private MP_PointCounter _pointCounterMpPrefab;
-    // private MP_PointCounter _pointCounter;
-    // private MP_PointCounter mp_PointCounterPrefab;
 
-
+    private GameObject _canvas;
     private void Start()
     {
        var canvas = GameObject.Find("Canvas");
-       _identificator = GameObject.Instantiate<Identificator>(identificatorPrefab, canvas.transform);
-        _identificator.SetTarget(transform);
+       _canvas = canvas;
+       SetIdentificator();
 
-        if (photonView.IsMine)
-        {
-            SetColor();
-            // SetPointColor();
-            _pointCounter = Instantiate(_pointCounterMpPrefab, canvas.transform);
-            _pointCounter.SetTarget(gameObject.GetComponent<MP_CharacterController>());
-            _pointCounter.SetColor(_identificator.GetColor());
-            _pointCounter.Initialize();
-        }
-        else
-        {
-            photonView.RPC("RequestColor",photonView.Owner,PhotonNetwork.LocalPlayer);
-        }
+       #region Chequeo de Photon is Mine
+
+       if (photonView.IsMine)
+       {
+           SetColor();
+           SetPointCounter();
+       }
+       else
+       {
+           photonView.RPC("RequestColor",photonView.Owner,PhotonNetwork.LocalPlayer);
+       }
+
+       #endregion
     }
-
+    
     [PunRPC]
     public void RequestColor(Player client)
     {
         photonView.RPC("SetColor",client);
     }
-
-    // [PunRPC]
-    // public void RequestPointColor(Player client)
-    // {
-    //     photonView.RPC("SetPointColor",client);
-    // }
     [PunRPC]
     public void SetColor()
     {
@@ -54,14 +48,19 @@ public class MP_CharacterView : SP_CharacterView
         }
     }
 
-    // [PunRPC]
-    // public void SetPointColor()
-    // {
-    //     // if (_pointCounter)
-    //     // {
-    //     //     _pointCounter.SetColor(_identificator.GetColor());
-    //     // }
-    // }
+    private void SetIdentificator()
+    {
+        _identificator = Instantiate(identificatorPrefab, _canvas.transform);
+        _identificator.SetTarget(transform);
+    }
+    private void SetPointCounter()
+    {
+        
+        _pointCounter = Instantiate(_pointCounterMpPrefab, _canvas.transform);
+        _pointCounter.SetTarget(gameObject.GetComponent<MP_CharacterController>());
+        _pointCounter.SetColor(_identificator.GetColor());
+        _pointCounter.Initialize();
 
+    }
 
 }

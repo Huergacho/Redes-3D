@@ -21,9 +21,9 @@ public class MasterController : MonoBehaviourPun
     }
     private void InstatiateMethods()
     {
-        PhotonNetwork.Instantiate(saver.gameObject.name, Vector3.zero, Quaternion.identity);
+        //PhotonNetwork.Instantiate(saver.gameObject.name, Vector3.zero, Quaternion.identity);
 
-        Instantiate(roundManager, Vector3.zero, Quaternion.identity);
+        PhotonNetwork.Instantiate(roundManager.gameObject.name, Vector3.zero, Quaternion.identity);
     }
 
 }

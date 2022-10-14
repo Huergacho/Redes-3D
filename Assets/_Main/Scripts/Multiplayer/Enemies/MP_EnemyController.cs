@@ -12,7 +12,7 @@ public class MP_EnemyController : SP_EnemyController
 
     protected override void Awake()
     {
-   
+        //RoundCounter.Instance.currentEnemies++;
         _mpLifeController = GetComponent<MP_LifeController>();
         _mpLifeController.AssignLife(_enemyStats.maxLife);
         _enemyModel = GetComponent<MP_EnemyModel>();
@@ -51,10 +51,10 @@ public class MP_EnemyController : SP_EnemyController
     }
     private void OnDieCommand()
     {
-        // Ver si disparamos por model o view por animación
+        MP_RoundManager.Instance.EnemyUpdates();
         PhotonNetwork.Destroy(gameObject);
     }
-
+    
     public override void OnObjectSpawn()
     {
         _mpLifeController.AssignLife(_enemyStats.maxLife);
