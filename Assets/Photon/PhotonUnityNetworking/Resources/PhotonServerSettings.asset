@@ -58,7 +58,12 @@ MonoBehaviour:
   - ExternalAddPlayer
   - GetMasterInstance
   - AssingPlayerRPC
+<<<<<<< Updated upstream
   - TakeHit
+=======
+  - LookAtRPC
+  - UpdateForward
+>>>>>>> Stashed changes
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

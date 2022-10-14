@@ -9,9 +9,9 @@ public class MP_EnemyController : SP_EnemyController
     private MP_LifeController _mpLifeController;
     private MP_EnemyView _enemyView;
 
-    private void Awake()
+    protected override void Awake()
     {
-        GetPlayersInScene();
+   
         _mpLifeController = GetComponent<MP_LifeController>();
         _mpLifeController.AssignLife(_enemyStats.maxLife);
         _enemyModel = GetComponent<MP_EnemyModel>();
@@ -20,6 +20,7 @@ public class MP_EnemyController : SP_EnemyController
 
     protected override void Start()
     {
+        GetPlayersInScene();
         if (targetModel != null)
         {
             InitializeOBS();

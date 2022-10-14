@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 public class SP_EnemyModel : MonoBehaviourPun
@@ -12,6 +13,11 @@ public class SP_EnemyModel : MonoBehaviourPun
     {
         _rb = GetComponent<Rigidbody>();
         _transform = transform;
+        if (!photonView.IsMine)
+        {
+            photonView.RPC(nameof(UpdateForward),photonView.Owner,PhotonNetwork.LocalPlayer);        
+        }
+    
     }
 
     public void Subscribe(SP_EnemyController controller)
@@ -36,7 +42,9 @@ public class SP_EnemyModel : MonoBehaviourPun
 
     private void LookAt(Vector3 dir)
     {
-        _transform.forward = dir.normalized;
+        var normDir = dir.normalized;
+        photonView.RPC(nameof(LookAtRPC),RpcTarget.Others,normDir);
+        _transform.forward = normDir;
     }
 
     private void Attack()
@@ -51,5 +59,17 @@ public class SP_EnemyModel : MonoBehaviourPun
     public void AssignStats(EnemySO stats)
     {
         data = stats;
+    }
+
+    [PunRPC]
+    public void LookAtRPC(Vector3 dir)
+    {
+        _transform.forward = dir;
+    }
+
+    [PunRPC]
+    public void UpdateForward(Player player)
+    {
+        photonView.RPC(nameof(LookAtRPC),player,_transform.forward);
     }
 }

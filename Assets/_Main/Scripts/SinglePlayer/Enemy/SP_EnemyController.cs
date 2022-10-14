@@ -39,16 +39,17 @@ public class SP_EnemyController : MonoBehaviourPun, IPooleable
     #endregion
 
    
-    private void Awake()
+    protected  virtual void Awake()
     {
+        if (!photonView.IsMine) Destroy(this);
         _spLifeController = GetComponent<SP_LifeController>();
         _spLifeController.AssignLife(_enemyStats.maxLife);
         _enemyModel = GetComponent<SP_EnemyModel>();
+        AssignTarget();
     }
     protected virtual void Start()
     {
         _enemyModel.AssignStats(_enemyStats);
-        AssignTarget();
         InitializeVoids();
     }
 
