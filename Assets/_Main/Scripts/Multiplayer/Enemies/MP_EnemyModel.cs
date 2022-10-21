@@ -20,6 +20,7 @@ public class MP_EnemyModel : MonoBehaviourPun
         controller.OnAttack += Attack;
         controller.OnIdle += Idle;
         controller.OnLookAt += LookAt;
+        controller.OnDie += Die;
     }
 
     private void Idle()

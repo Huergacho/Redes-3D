@@ -4,7 +4,7 @@ using Photon.Pun;
 public class MP_EnemySpawner : MonoBehaviourPun
 {
     [SerializeField] private Transform[] enemySpawnPoints;
-    [SerializeField] private MP_EnemyModel enemy;
+    [SerializeField] private MP_EnemyController enemy;
     private void Awake()
     {
         if (!PhotonNetwork.IsMasterClient)

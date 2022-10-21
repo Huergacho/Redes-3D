@@ -17,8 +17,8 @@ public class MP_EnemyView : MonoBehaviourPun
         controller.OnAttack += Attack;
         controller.OnDie += Die;
     }
-    
-    private void Attack(SP_LifeController blah)
+
+    private void Attack()
     {
         _animator.SetFloat("Speed",0f);
         photonView.RPC(nameof(UpdateSpeed), RpcTarget.Others, 0f);

@@ -8,13 +8,13 @@ public class MP_EnemyController : MonoBehaviourPun, IPooleable
 {
     private SP_LifeController _mpLifeController;
     [SerializeField]
-    private EnemySO _enemyStats;
+    private EnemySO enemyStats;
 
     private MP_EnemyModel _enemyModel;
     #region Target
 
     public MP_CharacterModel targetModel;
-    private Transform _targetTr => targetModel.transform;
+    private Transform TargetTr => targetModel.transform;
 
     #endregion
    
@@ -36,6 +36,8 @@ public class MP_EnemyController : MonoBehaviourPun, IPooleable
     public event Action OnIdle;
     public event Action OnAttack;
 
+    public event Action OnDie;
+
     #endregion
 
     private void Awake()
@@ -43,7 +45,7 @@ public class MP_EnemyController : MonoBehaviourPun, IPooleable
         if (!photonView.IsMine) Destroy(this);
         
         _mpLifeController = GetComponent<MP_LifeController>();
-        _mpLifeController.AssignLife(_enemyStats.maxLife);
+        _mpLifeController.AssignLife(enemyStats.maxLife);
         _enemyModel = GetComponent<MP_EnemyModel>();
 
     }
@@ -53,9 +55,9 @@ public class MP_EnemyController : MonoBehaviourPun, IPooleable
         AssignTarget();
         if (targetModel != null)
         {
-            InitializeOBS();
+            InitializeObs();
         }
-        _enemyModel.AssignStats(_enemyStats);
+        _enemyModel.AssignStats(enemyStats);
         _enemyModel.Subscribe(this);
         _mpLifeController.OnDie += OnDieCommand;
         _mpLifeController.OnTakeHit += targetModel.GetComponent<MP_CharacterController>().AddPoints;
@@ -87,24 +89,24 @@ public class MP_EnemyController : MonoBehaviourPun, IPooleable
         
         // Questions
         var attemptPlayerKill = new QuestionNode(IsCloseEnoughToAttack, goToAttack, goToChase);
-        var DidSightChangeToAttack = new QuestionNode(SightStateChanged, goToChase, attemptPlayerKill);
-        var IsInSight = new QuestionNode(LastInSightState, DidSightChangeToAttack, attemptPlayerKill);
+        var didSightChangeToAttack = new QuestionNode(SightStateChanged, goToChase, attemptPlayerKill);
+        var isInSight = new QuestionNode(LastInSightState, didSightChangeToAttack, attemptPlayerKill);
         
-        var IsPlayerAlive = new QuestionNode(() => targetModel.GetLife().IsAlive(), IsInSight, goToIdle);
+        var isPlayerAlive = new QuestionNode(() => targetModel.GetLife().IsAlive(), isInSight, goToIdle);
          
-        _root = IsPlayerAlive;
+        _root = isPlayerAlive;
     }   
     private void InitFsm()
     {
         //--------------- FSM Creation -------------------//                
         // States Creation
-        var idle = new EnemyIdleState<EnemyStatesConstants>(_enemyStats.idleTimeLenght, CheckPlayerInSight,
+        var idle = new EnemyIdleState<EnemyStatesConstants>(enemyStats.idleTimeLenght, CheckPlayerInSight,
             OnIdleCommand, _root, SetIdleStateCooldown);
        
-        var chase = new EnemyChaseState<EnemyStatesConstants>(_targetTr, _root, Behaviour, 
-            _enemyStats.attackTimeLenght, OnMoveCommand,OnLookAtCommand, SetIdleStateCooldown);
+        var chase = new EnemyChaseState<EnemyStatesConstants>(TargetTr, _root, Behaviour, 
+            enemyStats.attackTimeLenght, OnMoveCommand,OnLookAtCommand, SetIdleStateCooldown);
         
-        var attack = new EnemyAttackState<EnemyStatesConstants>(_root, OnAttackCommand, _enemyStats.attackTimeLenght, 
+        var attack = new EnemyAttackState<EnemyStatesConstants>(_root, OnAttackCommand, enemyStats.attackTimeLenght, 
             SetIdleStateCooldown);
       
         //Idle 
@@ -137,15 +139,15 @@ public class MP_EnemyController : MonoBehaviourPun, IPooleable
     private bool LastInSightState()
     {     
         _previousInSightState = _currentInSightState;    
-        _currentInSightState = _enemyModel.LineOfSightAI.SingleTargetInSight(_targetTr);
+        _currentInSightState = _enemyModel.LineOfSightAI.SingleTargetInSight(TargetTr);
         return _currentInSightState;
     }
     
     private bool IsCloseEnoughToAttack()
     {
-        var distance = Vector3.Distance(transform.position, _targetTr.position);
+        var distance = Vector3.Distance(transform.position, TargetTr.position);
 
-        return distance < _enemyStats.distanceToAttack;
+        return distance < enemyStats.distanceToAttack;
     }
     private void SetIdleStateCooldown(bool newState)
     {
@@ -153,7 +155,7 @@ public class MP_EnemyController : MonoBehaviourPun, IPooleable
     }
     private bool CheckPlayerInSight()
     {
-        var playerIsInSight = _enemyModel.LineOfSightAI.SingleTargetInSight(_targetTr);
+        var playerIsInSight = _enemyModel.LineOfSightAI.SingleTargetInSight(TargetTr);
         return playerIsInSight;
     }
     
@@ -186,15 +188,17 @@ public class MP_EnemyController : MonoBehaviourPun, IPooleable
     private void OnDieCommand()
     {
         gameObject.SetActive(false);
+        OnDie?.Invoke();
     }
     #endregion
 
 
     public void OnObjectSpawn()
     {
-        _mpLifeController.AssignLife(_enemyStats.maxLife);
+        _mpLifeController.AssignLife(enemyStats.maxLife);
     }
-    public void InitializeOBS()
+
+    private void InitializeObs()
     {
         Behaviour = new ObstacleAvoidance(transform, null, obstacleAvoidance.radius,
             obstacleAvoidance.maxObjs, obstacleAvoidance.obstaclesMask,
