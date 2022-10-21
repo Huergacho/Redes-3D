@@ -1,4 +1,5 @@
 using System;
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
@@ -21,6 +22,7 @@ public class PlayerItem : MonoBehaviourPunCallbacks
     //private PhotonView _view;
     private void Awake()
     {
+        
         _playerProperties = new ExitGames.Client.Photon.Hashtable();
         _backgroundImage = GetComponent<Image>();
     }
@@ -59,6 +61,8 @@ public class PlayerItem : MonoBehaviourPunCallbacks
         {//Evita error si no tenia datos antes y rompe el alma si tocas flechitas
             _playerProperties["playerAvatar"] = 0;
         }
+        UpdateProps(_playerProperties);
+        
     }
 
     public void OnClickLeftArrow()
@@ -68,6 +72,7 @@ public class PlayerItem : MonoBehaviourPunCallbacks
             ? avatars.Length - 1
             : (int)_playerProperties["playerAvatar"] - 1;
         PhotonNetwork.SetPlayerCustomProperties(_playerProperties);
+        UpdateProps(_playerProperties);
     }
     public void OnClickRighttArrow()
     {
@@ -76,5 +81,11 @@ public class PlayerItem : MonoBehaviourPunCallbacks
             ? 0
             : (int)_playerProperties["playerAvatar"] + 1;
         PhotonNetwork.SetPlayerCustomProperties(_playerProperties);
+        UpdateProps(_playerProperties);
+    }
+
+    private void UpdateProps(Hashtable custProps)
+    {
+        _player.SetCustomProperties(custProps);
     }
 }
