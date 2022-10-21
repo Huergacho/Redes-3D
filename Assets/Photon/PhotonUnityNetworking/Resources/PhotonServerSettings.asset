@@ -46,7 +46,10 @@ MonoBehaviour:
   - TakeDamage
   - UpdateForward
   - PlayerDieRPC
-  - UpdateSpeed
+  - RequestEnemyUpdate
+  - UpdateText
+  - CheckForMasterActualization
+  - EnemyUpdates
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
