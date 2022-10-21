@@ -1,25 +1,12 @@
 using Photon.Pun;
 using UnityEngine;
 using System;
-<<<<<<< Updated upstream
-using System.Collections.Generic;
-=======
-using System.Security.Cryptography;
->>>>>>> Stashed changes
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(MP_LifeController))]
 public class MP_EnemyController : MonoBehaviourPun, IPooleable
 {
-    private MP_LifeController _mpLifeController;
-<<<<<<< Updated upstream
-    private MP_EnemyView _enemyView;
-
-    protected override void Awake()
-    {
-        //RoundCounter.Instance.currentEnemies++;
-=======
-    private SP_LifeController _spLifeController;
+    private SP_LifeController _mpLifeController;
     [SerializeField]
     private EnemySO _enemyStats;
 
@@ -55,73 +42,38 @@ public class MP_EnemyController : MonoBehaviourPun, IPooleable
     {
         if (!photonView.IsMine) Destroy(this);
         
->>>>>>> Stashed changes
         _mpLifeController = GetComponent<MP_LifeController>();
         _mpLifeController.AssignLife(_enemyStats.maxLife);
         _enemyModel = GetComponent<MP_EnemyModel>();
-        _enemyView = GetComponent<MP_EnemyView>();
+
     }
 
     private void Start()
     {
-        GetPlayersInScene();
+        AssignTarget();
         if (targetModel != null)
         {
             InitializeOBS();
         }
         _enemyModel.AssignStats(_enemyStats);
         _enemyModel.Subscribe(this);
-        _enemyView.Subscribe(this);
         _mpLifeController.OnDie += OnDieCommand;
+        _mpLifeController.OnTakeHit += targetModel.GetComponent<MP_CharacterController>().AddPoints;
         InitDecisionTree();
         InitFsm();
     }
-<<<<<<< Updated upstream
-    private void GetPlayersInScene()
-=======
 
     private void AssignTarget()
->>>>>>> Stashed changes
     {
-        List<SP_CharacterModel> players = new List<SP_CharacterModel>();
-        foreach (var posPayer in FindObjectsOfType<MP_CharacterController>())
+        int playerCount = PhotonNetwork.CountOfPlayers;
+        int randomPlayerIndex = Random.Range(0, playerCount -1);
+        var newPlayer = PlayerSaver.Instance.characters[randomPlayerIndex];
+        if (newPlayer != null)
+            targetModel = newPlayer;
+        else
         {
-            if (posPayer.isActiveAndEnabled)
-            {
-                players.Add(posPayer.GetModel());
-            }
+            print("NO TA PLAYER");
         }
-<<<<<<< Updated upstream
-
-        //MP_CharacterModel[] players = new MP_CharacterModel[];
-        int index = Random.Range(0, players.Count-1);
-        targetModel = players[index];
-        if (!targetModel) this.enabled = false;
-    }
-    private void OnDieCommand()
-    {
-        MP_RoundManager.Instance.EnemyUpdates();
-        PhotonNetwork.Destroy(gameObject);
-    }
-    
-    public override void OnObjectSpawn()
-    {
-        _mpLifeController.AssignLife(_enemyStats.maxLife);
-    }
-
-    protected override void Update()
-    {
-        if (!targetModel.enabled) {GetPlayersInScene();}
-        _fsm.UpdateState();
-    }
-
-  
-    // [PunRPC]
-    // public void AssingPlayerRPC(MP_CharacterModel target)
-    // {
-    //     target = (MP_CharacterModel)targetModel;
-    // }
-=======
     }
     #region FSM Methods
     private void InitDecisionTree()
@@ -249,5 +201,4 @@ public class MP_EnemyController : MonoBehaviourPun, IPooleable
             obstacleAvoidance.multiplier, targetModel, obstacleAvoidance.timePrediction,
             ObstacleAvoidance.DesiredBehaviour.Seek);
     }
->>>>>>> Stashed changes
 }
