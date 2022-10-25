@@ -86,6 +86,6 @@ public class PlayerItem : MonoBehaviourPunCallbacks
 
     private void UpdateProps(Hashtable custProps)
     {
-        _player.SetCustomProperties(custProps);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(custProps);
     }
 }
