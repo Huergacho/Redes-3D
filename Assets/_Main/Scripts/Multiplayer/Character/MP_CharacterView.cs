@@ -1,14 +1,17 @@
-using System;
+
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using TMPro;
 
-public class MP_CharacterView : SP_CharacterView
+public class MP_CharacterView : MonoBehaviourPun
 {
     private Identificator _identificator;
 
-    private MP_PointCounter _pointCounter;
+    private SP_PointCounter _pointCounter;
+    
+    [SerializeField]private Identificator identificatorPrefab;
+
+    [SerializeField]private SP_PointCounter spPointCounterPrefab;
 
     [SerializeField]private MP_PointCounter _pointCounterMpPrefab;
 
@@ -18,6 +21,10 @@ public class MP_CharacterView : SP_CharacterView
        var canvas = GameObject.Find("Canvas");
        _canvas = canvas;
        SetIdentificator();
+       identificatorPrefab.SetTarget(this.transform);
+       identificatorPrefab.SetColor(1);
+       spPointCounterPrefab.SetColor(identificatorPrefab.GetColor());
+       spPointCounterPrefab.Initialize();
 
        #region Chequeo de Photon is Mine
 

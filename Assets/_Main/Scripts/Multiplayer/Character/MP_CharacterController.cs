@@ -1,20 +1,39 @@
-
+using System;
 using UnityEngine;
 using Photon.Pun;
 
 [RequireComponent(typeof(MP_CharacterModel),typeof(MP_Weapon),typeof(MP_LifeController))]
-public class MP_CharacterController : SP_CharacterController
+public class MP_CharacterController : MonoBehaviourPun
 {
-    // Update is called once per frame
-    protected override void Update()
+    [SerializeField] private Stats baseStats;
+    private MP_CharacterModel model;
+    public MP_CharacterModel Model => model;
+    private MP_LifeController _mpLifeController;
+    private MP_Weapon _mpWeapon;
+    
+    [SerializeField] private int currentPoints;
+    public event Action<int> OnAddPoints;
+    private void Awake()
     {
-        if (photonView.IsMine)
-        {
-            base.Update();
-        }
+        if(!photonView.IsMine) Destroy(this);
+        
+        _mpLifeController = GetComponent<MP_LifeController>();
+        model = GetComponent<MP_CharacterModel>();
+        _mpLifeController.AssignLife(baseStats.MaxLife);
+        model.AssignStats(baseStats, _mpLifeController);
+        _mpLifeController.OnDie += Die;
+        _mpWeapon = GetComponent<MP_Weapon>();
+
     }
 
-    protected override void Die()
+    private  void Update()
+    {
+        MoveCommand();
+        Shoot();
+        model.CorrectRotation();
+    }
+
+    private void Die()
     {
         // gameObject.SetActive(false);
         
@@ -22,15 +41,37 @@ public class MP_CharacterController : SP_CharacterController
        photonView.RPC(nameof(PlayerDieRPC),RpcTarget.All,gameObject);
     }
 
-    public override void AddPoints()
+    void MoveCommand()
     {
-        if (photonView.IsMine)
+        var movement = new Vector3(Input.GetAxis("Horizontal"),0 ,Input.GetAxis("Vertical"));
+        if(movement != Vector3.zero)
         {
-            base.AddPoints();
+            model.Move(movement);
         }
     }
 
+    void Shoot()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            _mpWeapon.Shoot();
+        }
+    }
 
+    public bool IsAlive()
+    {
+        return _mpLifeController.IsAlive();
+    }
+
+    public MP_CharacterModel GetModel()
+    {
+        return model;
+    }
+    public void AddPoints()
+    {
+        currentPoints++;
+        OnAddPoints?.Invoke(currentPoints);
+    }
 
     [PunRPC]
     void PlayerDieRPC(GameObject me)

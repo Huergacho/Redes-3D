@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using _Main.ScriptableObjects.Character;
 using Photon.Pun;
 using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]

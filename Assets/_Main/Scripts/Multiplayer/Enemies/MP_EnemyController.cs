@@ -42,7 +42,7 @@ public class MP_EnemyController : MonoBehaviourPun, IPooleable
 
     private void Awake()
     {
-        if (!photonView.IsMine) Destroy(this);
+        if (!PhotonNetwork.IsMasterClient) Destroy(this);
         
         _mpLifeController = GetComponent<MP_LifeController>();
         _mpLifeController.AssignLife(enemyStats.maxLife);
@@ -67,6 +67,7 @@ public class MP_EnemyController : MonoBehaviourPun, IPooleable
 
     private void AssignTarget()
     {
+        // Chequear el juego de la bomba de clase
         int playerCount = PhotonNetwork.CountOfPlayers;
         int randomPlayerIndex = Random.Range(0, playerCount -1);
         var newPlayer = PlayerSaver.Instance.characters[randomPlayerIndex];

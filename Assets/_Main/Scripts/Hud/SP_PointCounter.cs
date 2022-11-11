@@ -11,7 +11,7 @@ public class SP_PointCounter : MonoBehaviourPun
         private TextMeshProUGUI _currentPoints;
         private Image _playerColor;
         private Camera _camera;
-        protected SP_CharacterController _character;
+        protected MP_CharacterController _character;
         private void Awake()
         {
             _camera = Camera.main;

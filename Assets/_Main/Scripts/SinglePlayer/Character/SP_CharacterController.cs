@@ -1,5 +1,4 @@
 using System;
-using _Main.ScriptableObjects.Character;
 using Photon.Pun;
 using UnityEngine;
 
