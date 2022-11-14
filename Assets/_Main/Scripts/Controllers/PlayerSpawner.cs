@@ -15,6 +15,6 @@ public class PlayerSpawner : MonoBehaviourPun
        // Transform spawnPoint = spawnPoints[(int)PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"]];
         //GameObject playerToSpawn = playerPrefabs[(int)PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"]];
       //  PhotonNetwork.Instantiate(playerToSpawn.ToString(), spawnPoint.position, Quaternion.identity);
-        PhotonNetwork.Instantiate(playerPrefabs[0].ToString(), spawnPoint.position, Quaternion.identity);
+        PhotonNetwork.Instantiate(playerPrefabs[0].gameObject.name, spawnPoint.position, Quaternion.identity);
     }
 }
