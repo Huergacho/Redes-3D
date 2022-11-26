@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.Serialization;
 
-public class SP_GameManager : MonoBehaviourPun
+public class GameManager : MonoBehaviourPun
 {
-    [HideInInspector]public static SP_GameManager SPInstance;
-    [SerializeField]private SP_CharacterModel _character;
-    public SP_CharacterModel Character => _character;
+    [HideInInspector]public static GameManager Instance;
+    [SerializeField]private CharacterModel _character;
+    public CharacterModel Character => _character;
     protected virtual void Awake()
     {
-        SPInstance = this;
+        Instance = this;
         if (Character == null)
         {
             InstanceCharacter();

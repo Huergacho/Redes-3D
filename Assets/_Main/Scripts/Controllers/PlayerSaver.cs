@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerSaver : MonoBehaviourPun
 {
     // la reemplazamos con la de Player Spawner
-    public List<MP_CharacterModel> characters = new List<MP_CharacterModel>();
+    public List<CharacterModel> characters = new List<CharacterModel>();
     public static PlayerSaver Instance;
     private void Awake()
     {

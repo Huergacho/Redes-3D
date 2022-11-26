@@ -2,12 +2,12 @@ using System;
 using UnityEngine;
 using Photon.Pun;
 
-[RequireComponent(typeof(MP_CharacterModel),typeof(MP_Weapon),typeof(MP_LifeController))]
-public class MP_CharacterController : MonoBehaviourPun
+[RequireComponent(typeof(CharacterModel),typeof(MP_Weapon),typeof(MP_LifeController))]
+public class CharacterController : MonoBehaviourPun
 {
     [SerializeField] private Stats baseStats;
-    private MP_CharacterModel model;
-    public MP_CharacterModel Model => model;
+    private CharacterModel model;
+    public CharacterModel Model => model;
     private MP_LifeController _mpLifeController;
     private MP_Weapon _mpWeapon;
     
@@ -18,7 +18,7 @@ public class MP_CharacterController : MonoBehaviourPun
         if(!photonView.IsMine) Destroy(this);
         
         _mpLifeController = GetComponent<MP_LifeController>();
-        model = GetComponent<MP_CharacterModel>();
+        model = GetComponent<CharacterModel>();
         _mpLifeController.AssignLife(baseStats.MaxLife);
         model.AssignStats(baseStats, _mpLifeController);
         _mpLifeController.OnDie += Die;
@@ -35,26 +35,33 @@ public class MP_CharacterController : MonoBehaviourPun
 
     private void Die()
     {
-        // gameObject.SetActive(false);
-        
-       // PhotonNetwork.LocalPlayer;
-       photonView.RPC(nameof(PlayerDieRPC),RpcTarget.All,gameObject);
+        if (photonView.IsMine)
+        {
+            photonView.RPC(nameof(PlayerDieRPC),RpcTarget.All,gameObject);
+        }
     }
 
     void MoveCommand()
     {
-        var movement = new Vector3(Input.GetAxis("Horizontal"),0 ,Input.GetAxis("Vertical"));
-        if(movement != Vector3.zero)
+        if (photonView.IsMine)
         {
-            model.Move(movement);
+            var movement = new Vector3(Input.GetAxis("Horizontal"),0 ,Input.GetAxis("Vertical"));
+            if(movement != Vector3.zero)
+            {
+                model.Move(movement);
+            }
         }
+
     }
 
     void Shoot()
     {
-        if (Input.GetMouseButton(0))
+        if (photonView.IsMine)
         {
-            _mpWeapon.Shoot();
+            if (Input.GetMouseButton(0))
+            {
+                _mpWeapon.Shoot();
+            }
         }
     }
 
@@ -63,20 +70,26 @@ public class MP_CharacterController : MonoBehaviourPun
         return _mpLifeController.IsAlive();
     }
 
-    public MP_CharacterModel GetModel()
+    public CharacterModel GetModel()
     {
-        return model;
+        if (photonView.IsMine)
+        {
+            return model;
+        }
+        else return null;
     }
     public void AddPoints()
     {
-        currentPoints++;
-        OnAddPoints?.Invoke(currentPoints);
+        if (photonView.IsMine)
+        {
+            currentPoints++;
+            OnAddPoints?.Invoke(currentPoints);
+        }
     }
 
     [PunRPC]
     void PlayerDieRPC(GameObject me)
     {
-       // photonView.enable = false;
         me.SetActive(false);
     }
     

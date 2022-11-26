@@ -2,7 +2,7 @@ using Photon.Pun;
 using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 
-public class SP_CharacterModel : MonoBehaviourPun, IVel
+public class CharacterModel : MonoBehaviourPun, IVel
 {
     protected Rigidbody _rb;
     private Stats _stats;

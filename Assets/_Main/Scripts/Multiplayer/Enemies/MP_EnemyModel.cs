@@ -25,24 +25,37 @@ public class MP_EnemyModel : MonoBehaviourPun
 
     private void Idle()
     {
-        _rb.velocity = Vector3.zero;
+        if (photonView.IsMine)
+        {
+            _rb.velocity = Vector3.zero;
+        }
     }
 
     private void Move(Vector3 dir)
     {
-        var dirNorm = dir.normalized;
-        _rb.velocity = dirNorm * data.speed;
- 
+        if (photonView.IsMine)
+        {
+            var dirNorm = dir.normalized;
+            _rb.velocity = dirNorm * data.speed;
+        }
+
     }
 
     private void LookAt(Vector3 dir)
     {
-        _transform.forward = dir.normalized;
+        if (photonView.IsMine)
+        {
+            _transform.forward = dir.normalized;
+            
+        }
     }
 
     private void Attack()
     {
-        Debug.Log("Pew pew");
+        if (photonView.IsMine)
+        {
+            Debug.Log("Pew pew");
+        }
     }
 
     private void Die()
@@ -51,6 +64,7 @@ public class MP_EnemyModel : MonoBehaviourPun
 
     public void AssignStats(EnemySO stats)
     {
+        
         data = stats;
     }
 }

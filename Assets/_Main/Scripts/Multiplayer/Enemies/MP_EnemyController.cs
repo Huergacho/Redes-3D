@@ -13,7 +13,7 @@ public class MP_EnemyController : MonoBehaviourPun, IPooleable
     private MP_EnemyModel _enemyModel;
     #region Target
 
-    public MP_CharacterModel targetModel;
+    public CharacterModel targetModel;
     private Transform TargetTr => targetModel.transform;
 
     #endregion
@@ -52,7 +52,6 @@ public class MP_EnemyController : MonoBehaviourPun, IPooleable
 
     private void Start()
     {
-        AssignTarget();
         if (targetModel != null)
         {
             InitializeObs();
@@ -60,23 +59,9 @@ public class MP_EnemyController : MonoBehaviourPun, IPooleable
         _enemyModel.AssignStats(enemyStats);
         _enemyModel.Subscribe(this);
         _mpLifeController.OnDie += OnDieCommand;
-        _mpLifeController.OnTakeHit += targetModel.GetComponent<MP_CharacterController>().AddPoints;
+        _mpLifeController.OnTakeHit += targetModel.GetComponent<CharacterController>().AddPoints;
         InitDecisionTree();
         InitFsm();
-    }
-
-    private void AssignTarget()
-    {
-        // Chequear el juego de la bomba de clase
-        int playerCount = PhotonNetwork.CountOfPlayers;
-        int randomPlayerIndex = Random.Range(0, playerCount -1);
-        var newPlayer = PlayerSaver.Instance.characters[randomPlayerIndex];
-        if (newPlayer != null)
-            targetModel = newPlayer;
-        else
-        {
-            print("NO TA PLAYER");
-        }
     }
     #region FSM Methods
     private void InitDecisionTree()

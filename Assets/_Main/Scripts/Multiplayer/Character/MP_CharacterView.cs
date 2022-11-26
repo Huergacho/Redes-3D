@@ -7,11 +7,9 @@ public class MP_CharacterView : MonoBehaviourPun
 {
     private Identificator _identificator;
 
-    private SP_PointCounter _pointCounter;
+    private MP_PointCounter _pointCounter;
     
     [SerializeField]private Identificator identificatorPrefab;
-
-    [SerializeField]private SP_PointCounter spPointCounterPrefab;
 
     [SerializeField]private MP_PointCounter _pointCounterMpPrefab;
 
@@ -23,8 +21,6 @@ public class MP_CharacterView : MonoBehaviourPun
        SetIdentificator();
        identificatorPrefab.SetTarget(this.transform);
        identificatorPrefab.SetColor(1);
-       spPointCounterPrefab.SetColor(identificatorPrefab.GetColor());
-       spPointCounterPrefab.Initialize();
 
        #region Chequeo de Photon is Mine
 
@@ -62,11 +58,8 @@ public class MP_CharacterView : MonoBehaviourPun
     }
     private void SetPointCounter()
     {
-        
         _pointCounter = Instantiate(_pointCounterMpPrefab, _canvas.transform);
-        _pointCounter.SetTarget(gameObject.GetComponent<MP_CharacterController>());
-        _pointCounter.SetColor(_identificator.GetColor());
-        _pointCounter.Initialize();
+        _pointCounter.Initialize(gameObject.GetComponent<CharacterController>());
 
     }
 
