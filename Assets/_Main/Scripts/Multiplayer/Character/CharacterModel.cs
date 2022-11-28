@@ -1,3 +1,4 @@
+using System;
 using Photon.Pun;
 using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
@@ -8,9 +9,11 @@ public class CharacterModel : MonoBehaviourPun, IVel
     private Stats _stats;
     protected Camera _camera;
     private SP_LifeController _lifeController;
-    
+    private int currentPoints;
     private float _lastMoveMagnitude;
+    public event Action<int> OnAddPoints;
     // Start is called before the first frame update
+
     void Start()
     {
         _camera = Camera.main;
@@ -50,5 +53,14 @@ public class CharacterModel : MonoBehaviourPun, IVel
     public SP_LifeController GetLife()
     {
         return _lifeController;
+    }
+    
+    public void AddPoints()
+    {
+        if (photonView.IsMine)
+        {
+            currentPoints++;
+            OnAddPoints?.Invoke(currentPoints);
+        }
     }
 }

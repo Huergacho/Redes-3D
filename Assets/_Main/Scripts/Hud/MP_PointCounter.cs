@@ -10,7 +10,7 @@ public class MP_PointCounter : MonoBehaviourPun
         {
             _currentPoints = GetComponent<TextMeshProUGUI>();
         }
-        public void Initialize(CharacterController controller)
+        public void Initialize(CharacterModel controller)
         {
             controller.OnAddPoints += UpdatePoints;
             UpdatePoints(0);  

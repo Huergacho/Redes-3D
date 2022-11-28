@@ -1,24 +1,32 @@
 using System;
+using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
-using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviourPun
 {
     [HideInInspector]public static GameManager Instance;
     [SerializeField]private CharacterModel _character;
     public CharacterModel Character => _character;
-    protected virtual void Awake()
+
+    private  void Awake()
     {
-        Instance = this;
-        if (Character == null)
+        if (photonView.IsMine)
         {
-            InstanceCharacter();
+            Instance = this;
+            if (Character == null)
+            {
+                InstanceCharacter();
+            }
         }
+        else
+        {
+            Destroy(this);
+        }
+
     }
-    protected virtual void InstanceCharacter()
+    private void InstanceCharacter()
     {
-        Instantiate(Character);
+        PhotonNetwork.Instantiate(_character.name, transform.position, Quaternion.identity);
     }
 }

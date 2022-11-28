@@ -59,7 +59,7 @@ public class MP_CharacterView : MonoBehaviourPun
     private void SetPointCounter()
     {
         _pointCounter = Instantiate(_pointCounterMpPrefab, _canvas.transform);
-        _pointCounter.Initialize(gameObject.GetComponent<CharacterController>());
+        _pointCounter.Initialize(gameObject.GetComponent<CharacterModel>());
 
     }
 

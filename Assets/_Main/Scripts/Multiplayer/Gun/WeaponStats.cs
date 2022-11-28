@@ -9,6 +9,6 @@ public class WeaponStats : ScriptableObject {
     [SerializeField] private int weaponDamage;
     public int WeaponDamage => weaponDamage;
 
-    [SerializeField] private SP_Bullet bulletPrefab;
-    public SP_Bullet BulletPrefab => bulletPrefab; 
+    [SerializeField] private MP_Bullet bulletPrefab;
+    public MP_Bullet BulletPrefab => bulletPrefab; 
 }

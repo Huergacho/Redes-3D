@@ -1,33 +1,63 @@
+using System;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 
-public class MP_Bullet : SP_Bullet 
+public class MP_Bullet : MonoBehaviourPun 
 {
+    [SerializeField] private float bulletSpeed;
+    [SerializeField] private float lifeTime;
+    public int damage;
+    public CharacterModel owner;
 
-
-    protected override void Update()
+    private void Start()
     {
+    }
+
+    private void Update()
+    {
+        Move();
         if (photonView.IsMine)
         {
-          base.Update();  
+            DestroyOnLifeSpan();
         }
 
     }
-    protected override void DestroyObject()
+    private void DestroyObject()
     {
         PhotonNetwork.Destroy(gameObject);
     }
     
-    protected override void OnCollisionEnter(Collision other) 
+    private void OnCollisionEnter(Collision other) 
     {
         if (photonView.IsMine)
         {
-            base.OnCollisionEnter(other);
+            MakeDamage(other.gameObject);
+            DestroyObject();
         }
     }
-
-    protected override SP_LifeController GetTargetLifeComponent(GameObject target)
+    private void MakeDamage(GameObject target)
+    {
+        var life = GetTargetLifeComponent(target);
+        if (life != null)
+        {
+            owner.AddPoints();
+            life.TakeDamage(damage);
+        }
+    }
+    private void DestroyOnLifeSpan()
+    {
+        lifeTime -= Time.deltaTime;
+        if (lifeTime <= 0)
+        {
+            DestroyObject();
+        }
+    }
+    private void Move()
+    {
+        transform.position += transform.forward * bulletSpeed * Time.deltaTime;
+    }
+    private MP_LifeController GetTargetLifeComponent(GameObject target)
     {
         return target.GetComponent<MP_LifeController>();
     }

@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(MP_LifeController))]
 public class MP_EnemyController : MonoBehaviourPun, IPooleable
 {
-    private SP_LifeController _mpLifeController;
+    private MP_LifeController _mpLifeController;
     [SerializeField]
     private EnemySO enemyStats;
 
@@ -43,10 +43,10 @@ public class MP_EnemyController : MonoBehaviourPun, IPooleable
     private void Awake()
     {
         if (!PhotonNetwork.IsMasterClient) Destroy(this);
-        
         _mpLifeController = GetComponent<MP_LifeController>();
         _mpLifeController.AssignLife(enemyStats.maxLife);
         _enemyModel = GetComponent<MP_EnemyModel>();
+        AssignTarget();
 
     }
 
@@ -59,7 +59,6 @@ public class MP_EnemyController : MonoBehaviourPun, IPooleable
         _enemyModel.AssignStats(enemyStats);
         _enemyModel.Subscribe(this);
         _mpLifeController.OnDie += OnDieCommand;
-        _mpLifeController.OnTakeHit += targetModel.GetComponent<CharacterController>().AddPoints;
         InitDecisionTree();
         InitFsm();
     }
@@ -173,7 +172,7 @@ public class MP_EnemyController : MonoBehaviourPun, IPooleable
     }
     private void OnDieCommand()
     {
-        gameObject.SetActive(false);
+        PhotonNetwork.Destroy(gameObject);
         OnDie?.Invoke();
     }
     #endregion
@@ -184,6 +183,13 @@ public class MP_EnemyController : MonoBehaviourPun, IPooleable
         _mpLifeController.AssignLife(enemyStats.maxLife);
     }
 
+    public void AssignTarget()
+    {
+        var players = FindObjectsOfType<CharacterModel>();
+        var randomIndex = Random.Range(0, players.Length);
+        var player = players[randomIndex];
+        targetModel = player;
+    }
     private void InitializeObs()
     {
         Behaviour = new ObstacleAvoidance(transform, null, obstacleAvoidance.radius,

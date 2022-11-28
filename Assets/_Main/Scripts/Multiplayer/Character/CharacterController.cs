@@ -10,9 +10,6 @@ public class CharacterController : MonoBehaviourPun
     public CharacterModel Model => model;
     private MP_LifeController _mpLifeController;
     private MP_Weapon _mpWeapon;
-    
-    [SerializeField] private int currentPoints;
-    public event Action<int> OnAddPoints;
     private void Awake()
     {
         if(!photonView.IsMine) Destroy(this);
@@ -77,14 +74,6 @@ public class CharacterController : MonoBehaviourPun
             return model;
         }
         else return null;
-    }
-    public void AddPoints()
-    {
-        if (photonView.IsMine)
-        {
-            currentPoints++;
-            OnAddPoints?.Invoke(currentPoints);
-        }
     }
 
     [PunRPC]

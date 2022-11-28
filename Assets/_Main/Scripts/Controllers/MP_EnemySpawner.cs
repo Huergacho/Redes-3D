@@ -1,16 +1,29 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using Photon.Pun;
+using Random = UnityEngine.Random;
 
 public class MP_EnemySpawner : MonoBehaviourPun
 {
     [SerializeField] private Transform[] enemySpawnPoints;
     [SerializeField] private MP_EnemyController enemy;
+    [SerializeField] private float secondsToSpawn;
+    private Coroutine instanceEnemyRoutine;
+    [SerializeField] private int enemyCount;
     private void Awake()
     {
         if (!PhotonNetwork.IsMasterClient)
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Update()
+    {
+        if (instanceEnemyRoutine != null) {return;}
+
+        instanceEnemyRoutine = StartCoroutine(InstanceCooldown());
     }
 
     private int GetRandomIndex()
@@ -21,9 +34,16 @@ public class MP_EnemySpawner : MonoBehaviourPun
 
     public void InstatiateEnemyMultiPlayer()
     {
-        GameObject newEnemy = PhotonNetwork.Instantiate(enemy.gameObject.name, enemySpawnPoints[GetRandomIndex()].position, Quaternion.identity);
-        //var controller = newEnemy.GetComponent<MP_EnemyController>();
-       // controller.AssignTargetFromOutside(PlayerSaver.Instance.characters[Random.Range(0,PlayerSaver.Instance.characters.Count -1)]);
-       // photonView.RPC(nameof(controller.AssignTarget),photonView.Owner,PlayerSaver.Instance.characters[Random.Range(0,PlayerSaver.Instance.characters.Count -1)]);
+        for (int i = 0; i < enemyCount; i++)
+        {
+            GameObject newEnemy = PhotonNetwork.Instantiate(enemy.gameObject.name, enemySpawnPoints[GetRandomIndex()].position, Quaternion.identity);
+        }
+    }
+
+    private IEnumerator InstanceCooldown()
+    {
+        InstatiateEnemyMultiPlayer();
+        yield return new WaitForSeconds(secondsToSpawn);
+        instanceEnemyRoutine = null;
     }
 }

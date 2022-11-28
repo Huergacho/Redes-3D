@@ -11,7 +11,14 @@ public class SP_Weapon : MonoBehaviourPun
     [SerializeField] protected Transform firePoint;
     private float currFireCooldown;
     private bool canStartTimer;
+
+    protected CharacterModel owner;
     // Start is called before the first frame update
+    private void Awake()
+    {
+        owner = GetComponent<CharacterModel>();
+    }
+
     void Start()
     {
         stats.BulletPrefab.damage = stats.WeaponDamage;
@@ -46,5 +53,6 @@ public class SP_Weapon : MonoBehaviourPun
     protected virtual void BulletInstantiate()
     {
         var bulletClone = Instantiate(stats.BulletPrefab, firePoint.position, firePoint.rotation);
+        bulletClone.owner = this.owner;
     }
 }

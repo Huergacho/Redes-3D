@@ -62,6 +62,7 @@ public class MP_EnemyModel : MonoBehaviourPun
     {
     }
 
+
     public void AssignStats(EnemySO stats)
     {
         

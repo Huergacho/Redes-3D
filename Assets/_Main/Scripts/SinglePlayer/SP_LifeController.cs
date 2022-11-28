@@ -16,7 +16,6 @@ public class SP_LifeController : MonoBehaviourPun
         {
             Die();
         }
-        // TakeHit();
         if (photonView.IsMine)
         {
             print("Ay me duele");

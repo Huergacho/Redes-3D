@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
@@ -6,7 +7,6 @@ using UnityEngine.Serialization;
 
 public class MasterController : MonoBehaviourPun
 {
-    [SerializeField] private PlayerSaver saver;
     [SerializeField] private MP_RoundManager roundManager;
     private void Awake()
     {
@@ -23,5 +23,6 @@ public class MasterController : MonoBehaviourPun
     {
         PhotonNetwork.Instantiate(roundManager.gameObject.name, Vector3.zero, Quaternion.identity);
     }
+
 
 }
