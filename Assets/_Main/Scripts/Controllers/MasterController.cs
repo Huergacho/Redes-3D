@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Photon.Pun;
-using Photon.Realtime;
-using UnityEngine.Serialization;
+
 
 public class MasterController : MonoBehaviourPun
 {
     [SerializeField] private MP_RoundManager roundManager;
+    public static MasterController Instance { get; private set; }
     private void Awake()
     {
         if (PhotonNetwork.IsMasterClient)
         {
+            Instance = this;
             InstatiateMethods();
         }
         else
@@ -22,6 +21,12 @@ public class MasterController : MonoBehaviourPun
     private void InstatiateMethods()
     {
         PhotonNetwork.Instantiate(roundManager.gameObject.name, Vector3.zero, Quaternion.identity);
+    }
+
+    [PunRPC]
+    public void FinishGame()
+    {
+        
     }
 
 

@@ -1,12 +1,15 @@
 
 using System;
 using Photon.Pun;
+using TMPro;
+using UnityEngine;
 
 
 public class PoinstUI : MonoBehaviourPun
 {
-    public event Action<int> OnAddingPoint;
-    
+    public event Action<int> OnUpdatePoint;
+    private TMP_Text _pointText;
+    private int currPoints = 0;
     private void Awake()
     {
         if (!photonView.IsMine)
@@ -15,18 +18,17 @@ public class PoinstUI : MonoBehaviourPun
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        
+        _pointText = GetComponent<TMP_Text>();
     }
 
-    // Update is called once per frame
-    void Update()
+
+    void AddPoints(int point)
     {
-        
+        currPoints += point;
+        _pointText.text = currPoints.ToString();
+        OnUpdatePoint?.Invoke(currPoints);
     }
-
-
     
 }

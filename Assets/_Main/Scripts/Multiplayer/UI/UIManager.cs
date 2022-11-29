@@ -26,18 +26,12 @@ public class UIManager : MonoBehaviourPun
 
     void Subscribe()
     {
-        _timerUI.OnTimeIsUp += Finish;
+        _pointsUI.OnUpdatePoint += UpdatePoints;
     }
 
-    // Update is called once per frame
-    void Finish()
+    void UpdatePoints(int points)
     {
-        
-    }
-
-    void Addpoints(int points)
-    {
-        _points += points;
+        _points = points;
     }
     
 }

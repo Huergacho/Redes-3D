@@ -1,4 +1,3 @@
-using System;
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
@@ -9,14 +8,14 @@ public class TimerUI : MonoBehaviourPun
     private int timeInInt;
     private bool TimerOn;
     private TMP_Text _timerText;
-    public event Action OnTimeIsUp;
+  //  public event Action OnTimeIsUp;
     
     // Start is called before the first frame update
     private void Awake()
     {
-        if (!photonView.IsMine)
+        if (!PhotonNetwork.IsMasterClient)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 
@@ -26,7 +25,6 @@ public class TimerUI : MonoBehaviourPun
         _timerText = GetComponent<TMP_Text>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (TimerOn)
@@ -38,13 +36,10 @@ public class TimerUI : MonoBehaviourPun
             if (timeInInt == 0)
             {
                 TimerOn = false;
-                OnTimeIsUp?.Invoke();
+                MasterController.Instance.FinishGame();
             }
         }
         
     }
-    public void Subscribe(UIManager uiManager)
-    {
-        
-    }
+
 }
