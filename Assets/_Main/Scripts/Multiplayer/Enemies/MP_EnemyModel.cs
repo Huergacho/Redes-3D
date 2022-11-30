@@ -54,7 +54,7 @@ public class MP_EnemyModel : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            Debug.Log("Pew pew");
+            //Debug.Log("Pew pew");
         }
     }
 

@@ -16,12 +16,12 @@ public class SP_LifeController : MonoBehaviourPun
         {
             Die();
         }
-        if (photonView.IsMine)
-        {
-            print("Ay me duele");
-        }
+        // if (photonView.IsMine)
+        // {
+        //     print("Ay me duele");
+        // }
         _currentLife -= damage;
-        }
+    }
 
     public bool IsAlive()
     {

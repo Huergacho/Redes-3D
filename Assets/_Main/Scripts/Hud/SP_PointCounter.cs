@@ -26,7 +26,7 @@ public class SP_PointCounter : MonoBehaviourPun
         public void Initialize()
         {
             _character.OnAddPoints += UpdatePoints;
-            UpdatePoints(0);  
+            UpdatePoints(0,null);  
         }
         public void SetTarget(CharacterModel controller)
         {
@@ -36,8 +36,9 @@ public class SP_PointCounter : MonoBehaviourPun
         {
             _currentPoints.color = color;
         }
-        public virtual void UpdatePoints(int data)
+        public virtual void UpdatePoints(int data,string blah)
         {
             _currentPoints.text = "Points: " + data.ToString();
+     
         }
     }

@@ -43,7 +43,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         roomPanel.SetActive(false);
         lobbyPanel.SetActive(true);
         _nextUpdateTime = 0f;
-
         PhotonNetwork.JoinLobby();
     }
 
@@ -151,6 +150,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     public void OnClickPlayButton()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.LoadLevel("House");
     }
     public void OnClickLeaveRoom()

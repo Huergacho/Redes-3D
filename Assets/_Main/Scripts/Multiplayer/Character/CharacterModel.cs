@@ -11,8 +11,9 @@ public class CharacterModel : MonoBehaviourPun, IVel
     private SP_LifeController _lifeController;
     private int currentPoints;
     private float _lastMoveMagnitude;
-    public event Action<int> OnAddPoints;
-    // Start is called before the first frame update
+    public event Action<int, string> OnAddPoints;
+    public string Name => photonView.name;
+
 
     void Start()
     {
@@ -60,7 +61,7 @@ public class CharacterModel : MonoBehaviourPun, IVel
         if (photonView.IsMine)
         {
             currentPoints++;
-            OnAddPoints?.Invoke(currentPoints);
+            OnAddPoints?.Invoke(currentPoints, Name);
         }
     }
 }

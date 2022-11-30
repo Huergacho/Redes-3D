@@ -1,22 +1,21 @@
 using Photon.Pun;
 using TMPro;
-using UnityEngine;
-using UnityEngine.UIElements;
+
 
 public class MP_PointCounter : MonoBehaviourPun
     {
-        private TextMeshProUGUI _currentPoints;
+        private TMP_Text _currentPoints;
         private void Awake()
         {
-            _currentPoints = GetComponent<TextMeshProUGUI>();
+            _currentPoints = GetComponent<TMP_Text>();
         }
         public void Initialize(CharacterModel controller)
         {
             controller.OnAddPoints += UpdatePoints;
-            UpdatePoints(0);  
         }
-        public void UpdatePoints(int data)
+        public void UpdatePoints(int data, string name)
         {
             _currentPoints.text = "Points: " + data.ToString();
+            MasterController.Instance.UpdateScores(name,data);
         }
     }

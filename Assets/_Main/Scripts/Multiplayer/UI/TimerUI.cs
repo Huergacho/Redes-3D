@@ -15,16 +15,20 @@ public class TimerUI : MonoBehaviourPun
     {
         if (!PhotonNetwork.IsMasterClient)
         {
-            Destroy(gameObject);
+            Destroy(this);
         }
     }
 
     void Start()
     {
-        TimerOn = true;
+        TimerOn = false;
         _timerText = GetComponent<TMP_Text>();
     }
 
+    public void SetStart()
+    {
+        TimerOn = true;
+    }
     void Update()
     {
         if (TimerOn)
