@@ -4,27 +4,25 @@ using UnityEngine;
 
 public class TimerUI : MonoBehaviourPun
 {
-    [SerializeField] private float timeLeft;
+    [SerializeField] private float timeLeft = 99;
     private int timeInInt;
-    private bool TimerOn;
+    private bool TimerOn = false;
     private TMP_Text _timerText;
-  //  public event Action OnTimeIsUp;
     
-    // Start is called before the first frame update
     private void Awake()
     {
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            Destroy(this);
-        }
+        // if (!PhotonNetwork.IsMasterClient)
+        // {
+        //     Destroy(this);
+        // }
     }
 
     void Start()
     {
-        TimerOn = false;
         _timerText = GetComponent<TMP_Text>();
     }
 
+    [PunRPC]
     public void SetStart()
     {
         TimerOn = true;

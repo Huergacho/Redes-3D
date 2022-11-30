@@ -5,28 +5,42 @@ using Photon.Pun;
 using UnityEditor;
 
 
-public class MasterController : MonoBehaviourPun
+public class MasterController : MonoBehaviourPunCallbacks
 {
     [SerializeField] private MP_RoundManager roundManager;
-    [SerializeField] private TimerUI _timerUI;
-    [SerializeField] private UIWinManager _winManager;
+    private TimerUI _timerUI;
+    [SerializeField] GameObject LoCanvas;
+    private UIWinManager _winManager;
     private Dictionary<string, int> HighScore;
-    public static MasterController Instance { get; private set; }
+    private static MasterController _instance;
+    public static MasterController Instance => _instance;
     private void Awake()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (_instance != null)
         {
-            Instance = this;
-            InstatiateMethods();
+            Destroy(this);
         }
         else
         {
-            Destroy(this);
+            _instance = this;
+            InstatiateMethods();
         }
     }
     private void InstatiateMethods()
     {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            if (photonView.IsMine)
+            {
+                PhotonNetwork.Destroy(gameObject);
+            }
+            return; 
+        }
         PhotonNetwork.Instantiate(roundManager.gameObject.name, Vector3.zero, Quaternion.identity);
+        PhotonNetwork.Instantiate(LoCanvas.name, Vector3.zero, Quaternion.identity);
+        
+        // _winManager = LoCanvas.GetComponentInChildren<UIWinManager>();
+        // _timerUI = LoCanvas.GetComponentInChildren<TimerUI>();
         _timerUI.SetStart();
         HighScore = new Dictionary<string, int>();
         LoadScores();
@@ -41,6 +55,11 @@ public class MasterController : MonoBehaviourPun
         }
     }
 
+    public void RPCMaster(string name, params object[] p)
+    {
+        photonView.RPC(name, PhotonNetwork.MasterClient, p);
+    }
+    [PunRPC]
     public void UpdateScores(string name, int score)
     {
         HighScore[name] = score;

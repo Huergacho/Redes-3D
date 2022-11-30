@@ -11,13 +11,14 @@ public class MP_CharacterView : MonoBehaviourPun
     
     [SerializeField]private Identificator identificatorPrefab;
 
-    [SerializeField]private MP_PointCounter _pointCounterMpPrefab;
+//    [SerializeField]private MP_PointCounter _pointCounterMpPrefab;
 
+ //   private GameObject _pointerObject;
     private GameObject _canvas;
     private void Start()
     {
-       var canvas = GameObject.Find("Canvas");
-       _canvas = canvas;
+        _canvas = GameObject.Find("Canvas");
+
        SetIdentificator();
        identificatorPrefab.SetTarget(this.transform);
        identificatorPrefab.SetColor(1);
@@ -26,8 +27,8 @@ public class MP_CharacterView : MonoBehaviourPun
 
        if (photonView.IsMine)
        {
-           SetColor();
-           SetPointCounter();
+          SetColor();
+          SetPointCounter();
        }
        else
        {
@@ -58,9 +59,9 @@ public class MP_CharacterView : MonoBehaviourPun
     }
     private void SetPointCounter()
     {
-        _pointCounter = Instantiate(_pointCounterMpPrefab, _canvas.transform);
+        var pointerUI = _canvas.GetComponentInChildren<MP_PointCounter>();
+        _pointCounter = pointerUI;
         _pointCounter.Initialize(gameObject.GetComponent<CharacterModel>());
-
     }
 
 }
