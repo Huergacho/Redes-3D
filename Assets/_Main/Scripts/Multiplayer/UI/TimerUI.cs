@@ -25,12 +25,15 @@ public class TimerUI : MonoBehaviourPun
         _timerText = GetComponent<TMP_Text>();
     }
 
+    [PunRPC]
     public void SetStart()
     {
+        print("cambio bool");
         TimerOn = true;
     }
     void Update()
     {
+        print("Timer on" + TimerOn);
         if (TimerOn)
         {
             timeLeft -= Time.deltaTime;
