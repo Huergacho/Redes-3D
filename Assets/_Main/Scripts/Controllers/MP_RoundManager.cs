@@ -69,23 +69,12 @@ public class MP_RoundManager : MonoBehaviourPun
             }
         }
     }
-    [PunRPC]
-    public void EnemyUpdates()
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            _enemiesInScene--;
-            if (_enemiesInScene <= 0)
-            {
-                AddRound();
-                CallToSpawn();
-            }
-        }
-        else
-        {
-            AddRound();
-        }
 
+    [PunRPC]
+    public void DisableSpawner()
+    {
+        _mpEnemySpawner.enabled = false;
     }
+
     
 }

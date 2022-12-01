@@ -34,19 +34,19 @@ public class MasterController : MonoBehaviourPun
         // }
         PhotonNetwork.Instantiate(roundManager.gameObject.name, Vector3.zero, Quaternion.identity);
 
-        _timerUI.photonView.RPC("SetStart",RpcTarget.Others);
+        _timerUI.photonView.RPC("SetStart",RpcTarget.All);
         HighScore = new Dictionary<string, int>();
-        LoadScores();
+      //  LoadScores();
     }
 
-    void LoadScores()
-    {
-        var players = FindObjectsOfType<CharacterModel>();
-        foreach (var item in players)
-        {
-            HighScore.Add(item.Name,0);
-        }
-    }
+    // void LoadScores()
+    // {
+    //     var players = FindObjectsOfType<CharacterModel>();
+    //     foreach (var item in players)
+    //     {
+    //         HighScore.Add(item.Name,0);
+    //     }
+    // }
 
     [PunRPC]
     public void UpdateScores(string name, int score)
@@ -60,7 +60,7 @@ public class MasterController : MonoBehaviourPun
 
     private string FindTopScore()
     {
-        string winner = " ";
+        string winner = "MARIO ES MEJOR QUE CRASH";
         int max = 0;
         foreach (var item in HighScore)
         {
@@ -79,6 +79,13 @@ public class MasterController : MonoBehaviourPun
         string winner = FindTopScore();
         print(winner);
         _winManager.WinScreen(winner,HighScore[winner].ToString(),true);
+        // roundManager.photonView.RPC("DisableSpawner",RpcTarget.All);
+        // var modelos = FindObjectsOfType<MP_CharacterView>();
+        // foreach (var item in modelos)
+        // {
+        //     item.gameObject.SetActive(false); 
+        // }
+
     }
 
 
