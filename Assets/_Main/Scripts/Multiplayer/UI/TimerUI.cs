@@ -5,6 +5,7 @@ using UnityEngine;
 public class TimerUI : MonoBehaviourPun
 {
     [SerializeField] private float timeLeft;
+    public float TimeLeft => timeLeft;
     private int timeInInt;
     private bool TimerOn;
     private TMP_Text _timerText;
@@ -26,9 +27,10 @@ public class TimerUI : MonoBehaviourPun
     }
 
     [PunRPC]
-    public void SetStart()
+    public void SetStart(float _timeLeft)
     {
         TimerOn = true;
+        timeLeft = _timeLeft;
     }
     void Update()
     {

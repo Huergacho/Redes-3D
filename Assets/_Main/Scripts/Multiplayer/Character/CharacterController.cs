@@ -10,10 +10,10 @@ public class CharacterController : MonoBehaviourPun
     public CharacterModel Model => model;
     private MP_LifeController _mpLifeController;
     private MP_Weapon _mpWeapon;
+    private UIWinManager _winManager;
     private void Awake()
     {
         if(!photonView.IsMine) Destroy(this);
-        
         _mpLifeController = GetComponent<MP_LifeController>();
         model = GetComponent<CharacterModel>();
         _mpLifeController.AssignLife(baseStats.MaxLife);
@@ -22,12 +22,11 @@ public class CharacterController : MonoBehaviourPun
         _mpWeapon = GetComponent<MP_Weapon>();
 
     }
-
     private  void Update()
     {
-        MoveCommand();
-        Shoot();
-        model.CorrectRotation();
+            MoveCommand();
+            Shoot();
+            model.CorrectRotation();
     }
 
     private void Die()

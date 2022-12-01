@@ -7,7 +7,7 @@ using UnityEditor;
 
 public class MasterController : MonoBehaviourPun
 {
-    [SerializeField] private MP_RoundManager roundManager;
+    //[SerializeField] private MP_RoundManager roundManager;
     [SerializeField] private TimerUI _timerUI;
     [SerializeField] private UIWinManager _winManager;
     private Dictionary<string, int> HighScore;
@@ -21,22 +21,28 @@ public class MasterController : MonoBehaviourPun
         }
         else
         {
-            _instance = this; 
-            InstatiateMethods();
+            _instance = this;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                InstatiateMethods();
+            }
+            else
+            {
+                photonView.RPC(nameof(InstatiateMethods),photonView.Owner);
+            }
+            CreateHighScore();
         }
     }
+    [PunRPC]
     private void InstatiateMethods()
     {
-        // if (!PhotonNetwork.IsMasterClient)
-        // {
-        //     Destroy(this);
-        //     return;
-        // }
-        PhotonNetwork.Instantiate(roundManager.gameObject.name, Vector3.zero, Quaternion.identity);
+        _timerUI.SetStart(_timerUI.TimeLeft);
+        _timerUI.photonView.RPC("SetStart", RpcTarget.OthersBuffered, _timerUI.TimeLeft);
+    }
 
-        _timerUI.photonView.RPC("SetStart",RpcTarget.All);
+    private void CreateHighScore()
+    {
         HighScore = new Dictionary<string, int>();
-      //  LoadScores();
     }
 
     // void LoadScores()
@@ -45,7 +51,7 @@ public class MasterController : MonoBehaviourPun
     //     foreach (var item in players)
     //     {
     //         HighScore.Add(item.Name,0);
-    //     }
+    //     }<<
     // }
 
     [PunRPC]
