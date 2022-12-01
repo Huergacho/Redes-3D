@@ -11,22 +11,26 @@ public class MasterController : MonoBehaviourPun
     [SerializeField] private TimerUI _timerUI;
     [SerializeField] private UIWinManager _winManager;
     private Dictionary<string, int> HighScore;
-    public static MasterController Instance { get; private set; }
+    public static MasterController _instance;
+    public static MasterController Instance => _instance;
     private void Awake()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (_instance != null)
         {
-            Instance = this;
-            InstatiateMethods();
+            Destroy(this);
         }
         else
         {
-            Destroy(this);
+            _instance = this;
+            InstatiateMethods();
         }
     }
     private void InstatiateMethods()
     {
         PhotonNetwork.Instantiate(roundManager.gameObject.name, Vector3.zero, Quaternion.identity);
+        var canvas = GameObject.Find("Canvas");
+        _timerUI = canvas.GetComponentInChildren<TimerUI>();        
+        
         _timerUI.SetStart();
         HighScore = new Dictionary<string, int>();
         LoadScores();

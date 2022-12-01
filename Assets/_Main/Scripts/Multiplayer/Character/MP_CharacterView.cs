@@ -58,8 +58,9 @@ public class MP_CharacterView : MonoBehaviourPun
     }
     private void SetPointCounter()
     {
-        _pointCounter = Instantiate(_pointCounterMpPrefab, _canvas.transform);
-        _pointCounter.Initialize(gameObject.GetComponent<CharacterModel>());
+        var pointerUI = _canvas.GetComponentInChildren<MP_PointCounter>();
+        _pointCounter = pointerUI;
+        _pointCounter.Initialize(gameObject.GetComponent<CharacterModel>()); 
 
     }
 

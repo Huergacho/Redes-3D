@@ -13,15 +13,15 @@ public class TimerUI : MonoBehaviourPun
     // Start is called before the first frame update
     private void Awake()
     {
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            Destroy(this);
-        }
+        // if (!PhotonNetwork.IsMasterClient)
+        // {
+        //     Destroy(this);
+        // }
+        TimerOn = false;
     }
 
     void Start()
     {
-        TimerOn = false;
         _timerText = GetComponent<TMP_Text>();
     }
 
