@@ -27,9 +27,14 @@ public class MasterController : MonoBehaviourPun
     }
     private void InstatiateMethods()
     {
+        // if (!PhotonNetwork.IsMasterClient)
+        // {
+        //     Destroy(this);
+        //     return;
+        // }
         PhotonNetwork.Instantiate(roundManager.gameObject.name, Vector3.zero, Quaternion.identity);
 
-        _timerUI.photonView.RPC("SetStart",RpcTarget.All);
+        _timerUI.photonView.RPC("SetStart",RpcTarget.Others);
         HighScore = new Dictionary<string, int>();
         LoadScores();
     }
@@ -43,8 +48,13 @@ public class MasterController : MonoBehaviourPun
         }
     }
 
+    [PunRPC]
     public void UpdateScores(string name, int score)
     {
+        if (!HighScore.ContainsKey(name))
+        {
+            HighScore.Add(name,score);
+        }
         HighScore[name] = score;
     }
 
@@ -67,6 +77,7 @@ public class MasterController : MonoBehaviourPun
     public void FinishGame()
     {
         string winner = FindTopScore();
+        print(winner);
         _winManager.WinScreen(winner,HighScore[winner].ToString(),true);
     }
 

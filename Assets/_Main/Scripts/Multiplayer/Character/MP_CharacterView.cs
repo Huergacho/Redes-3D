@@ -11,9 +11,7 @@ public class MP_CharacterView : MonoBehaviourPun
     
     [SerializeField]private Identificator identificatorPrefab;
 
-    [SerializeField]private MP_PointCounter _pointCounterMpPrefab;
-
-    private GameObject _canvas;
+   private GameObject _canvas;
     private void Start()
     {
        var canvas = GameObject.Find("Canvas");
@@ -63,5 +61,6 @@ public class MP_CharacterView : MonoBehaviourPun
         _pointCounter.Initialize(gameObject.GetComponent<CharacterModel>()); 
 
     }
+    
 
 }

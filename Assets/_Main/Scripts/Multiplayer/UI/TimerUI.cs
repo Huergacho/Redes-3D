@@ -41,7 +41,7 @@ public class TimerUI : MonoBehaviourPun
             if (timeInInt == 0)
             {
                 TimerOn = false;
-                MasterController.Instance.FinishGame();
+                MasterController.Instance.photonView.RPC("FinishGame",RpcTarget.All);
             }
         }
         

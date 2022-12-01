@@ -16,6 +16,6 @@ public class MP_PointCounter : MonoBehaviourPun
         public void UpdatePoints(int data, string name)
         {
             _currentPoints.text = "Points: " + data.ToString();
-            MasterController.Instance.UpdateScores(name,data);
+            MasterController.Instance.photonView.RPC("UpdateScores",RpcTarget.All,name,data);
         }
     }

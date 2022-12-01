@@ -12,7 +12,7 @@ public class CharacterModel : MonoBehaviourPun, IVel
     private int currentPoints;
     private float _lastMoveMagnitude;
     public event Action<int, string> OnAddPoints;
-    public string Name => photonView.name;
+    public string Name => PhotonNetwork.NickName;
 
 
     void Start()
