@@ -28,12 +28,10 @@ public class TimerUI : MonoBehaviourPun
     [PunRPC]
     public void SetStart()
     {
-        print("cambio bool");
         TimerOn = true;
     }
     void Update()
     {
-        print("Timer on" + TimerOn);
         if (TimerOn)
         {
             timeLeft -= Time.deltaTime;

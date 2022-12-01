@@ -21,17 +21,15 @@ public class MasterController : MonoBehaviourPun
         }
         else
         {
-            _instance = this;
+            _instance = this; 
             InstatiateMethods();
         }
     }
     private void InstatiateMethods()
     {
         PhotonNetwork.Instantiate(roundManager.gameObject.name, Vector3.zero, Quaternion.identity);
-        var canvas = GameObject.Find("Canvas");
-        _timerUI = canvas.GetComponentInChildren<TimerUI>();        
-        
-        _timerUI.SetStart();
+
+        _timerUI.photonView.RPC("SetStart",RpcTarget.All);
         HighScore = new Dictionary<string, int>();
         LoadScores();
     }
